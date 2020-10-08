@@ -1,0 +1,6 @@
+E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\clase01\bin\Debug\clase01.dll
+E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\clase01\bin\Debug\clase01.pdb
+E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\clase01\obj\Debug\clase01.csprojAssemblyReference.cache
+E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\clase01\obj\Debug\clase01.csproj.CoreCompileInputs.cache
+E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\clase01\obj\Debug\clase01.dll
+E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\clase01\obj\Debug\clase01.pdb
