@@ -5,3 +5,10 @@ C:\Users\Agustin\source\repos\ConsoleApp1\ConsoleApp1\obj\Debug\Program.csprojAs
 C:\Users\Agustin\source\repos\ConsoleApp1\ConsoleApp1\obj\Debug\Program.csproj.CoreCompileInputs.cache
 C:\Users\Agustin\source\repos\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.exe
 C:\Users\Agustin\source\repos\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.pdb
+C:\Users\Agustin\Desktop\Agus\EDSA Academy\ASP.NET-Fundamentals\ConsoleApp1\bin\Debug\ConsoleApp1.exe.config
+C:\Users\Agustin\Desktop\Agus\EDSA Academy\ASP.NET-Fundamentals\ConsoleApp1\bin\Debug\ConsoleApp1.exe
+C:\Users\Agustin\Desktop\Agus\EDSA Academy\ASP.NET-Fundamentals\ConsoleApp1\bin\Debug\ConsoleApp1.pdb
+C:\Users\Agustin\Desktop\Agus\EDSA Academy\ASP.NET-Fundamentals\ConsoleApp1\obj\Debug\Program.csprojAssemblyReference.cache
+C:\Users\Agustin\Desktop\Agus\EDSA Academy\ASP.NET-Fundamentals\ConsoleApp1\obj\Debug\Program.csproj.CoreCompileInputs.cache
+C:\Users\Agustin\Desktop\Agus\EDSA Academy\ASP.NET-Fundamentals\ConsoleApp1\obj\Debug\ConsoleApp1.exe
+C:\Users\Agustin\Desktop\Agus\EDSA Academy\ASP.NET-Fundamentals\ConsoleApp1\obj\Debug\ConsoleApp1.pdb

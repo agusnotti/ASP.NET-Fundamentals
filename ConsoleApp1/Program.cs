@@ -18,9 +18,6 @@ namespace ConsoleApp1
             prueba2.getSaludo();
 
 
-            // Class1 es static, con metodos estaticos... no necesito instanciar. Se agrega en referencias
-
-
             try
             {
                 Errores.LanzarError.LanzarError.lanzarError();
