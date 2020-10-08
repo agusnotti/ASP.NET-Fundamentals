@@ -1,9 +1,0 @@
-E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\Main\bin\Debug\Main.pdb
-E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\Main\bin\Debug\clase01.dll
-E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\Main\bin\Debug\clase01.pdb
-E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\Main\obj\Debug\Main.csprojAssemblyReference.cache
-E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\Main\obj\Debug\Main.csproj.CoreCompileInputs.cache
-E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\Main\obj\Debug\Main.csproj.CopyComplete
-E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\Main\obj\Debug\Main.pdb
-E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\Main\bin\Debug\Main.exe
-E:\Mi unidad\EDSA Academy\Ejercicios\EDSAAcademy\Main\obj\Debug\Main.exe
