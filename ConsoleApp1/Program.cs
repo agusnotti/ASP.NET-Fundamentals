@@ -12,6 +12,8 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            
+            //namespace.clase variable
             Ejemplo.Prueba2 prueba2 = new Ejemplo.Prueba2(); //instancio la clase
             prueba2.ejemplo();
 
@@ -20,6 +22,10 @@ namespace ConsoleApp1
 
             try
             {
+
+                //clases estaticas no necesito instanciar
+
+                   //namespace.namespace.clase.metodo
                 Errores.LanzarError.LanzarError.lanzarError();
             }
             catch(Exception error)
