@@ -31,6 +31,22 @@ namespace Agenda.Site
             Application["Credenciales"] = listCredenciales;
 
 
+            //GUARDAR UN CONTACTO
+            List<Contacto> contactos = new List<Contacto>();
+            Contacto contacto = new Contacto
+            {
+                Nombre = "Agustina",
+                Apellido = "Notti",
+                Pais = "Argentina"
+            };
+
+            contactos.Add(contacto);
+
+            contactos.Add(new Contacto { Nombre = "Agustin", Apellido = "Meliendrez", Pais = "Argentina" });
+
+            Application["Contactos"] = contactos;
+
+
             //List<Entity.Usuario> lstExample = new List<Entity.Usuario>();
             //for (int i = 1; i < 11; i++)
             //{

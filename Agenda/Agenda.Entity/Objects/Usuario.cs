@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace Agenda.Entity
 {
     public class Usuario
-    {
-        
+    {        
         public string User { get; set; }
         public string Pass { get; set; }
     }
