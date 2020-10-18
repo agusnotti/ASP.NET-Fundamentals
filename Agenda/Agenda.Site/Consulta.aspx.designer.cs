@@ -24,40 +24,22 @@ namespace Agenda.Site
         protected global::System.Web.UI.WebControls.Label UserName;
 
         /// <summary>
-        /// Control LabelNombre.
+        /// Control LabelNombreApellido.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelNombre;
+        protected global::System.Web.UI.WebControls.Label LabelNombreApellido;
 
         /// <summary>
-        /// Control Nombre.
+        /// Control NombreApellido.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Nombre;
-
-        /// <summary>
-        /// Control LabelApellido.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelApellido;
-
-        /// <summary>
-        /// Control Apellido.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Apellido;
+        protected global::System.Web.UI.WebControls.TextBox NombreApellido;
 
         /// <summary>
         /// Control LabelPaises.
@@ -114,15 +96,6 @@ namespace Agenda.Site
         protected global::System.Web.UI.WebControls.TextBox FechaDesdeBox;
 
         /// <summary>
-        /// Control CalendarDesde.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar CalendarDesde;
-
-        /// <summary>
         /// Control FechaHasta.
         /// </summary>
         /// <remarks>
@@ -139,15 +112,6 @@ namespace Agenda.Site
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox FechaHastaBox;
-
-        /// <summary>
-        /// Control CalendarHasta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar CalendarHasta;
 
         /// <summary>
         /// Control LabelContactoInterno.
@@ -168,6 +132,60 @@ namespace Agenda.Site
         protected global::System.Web.UI.WebControls.DropDownList ContactoInternoList;
 
         /// <summary>
+        /// Control OrganizacionLabel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label OrganizacionLabel;
+
+        /// <summary>
+        /// Control OrganizacionBox.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox OrganizacionBox;
+
+        /// <summary>
+        /// Control AreaLabel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label AreaLabel;
+
+        /// <summary>
+        /// Control AreaList.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList AreaList;
+
+        /// <summary>
+        /// Control Activo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Activo;
+
+        /// <summary>
+        /// Control ActivoList.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ActivoList;
+
+        /// <summary>
         /// Control LimpiarCampos.
         /// </summary>
         /// <remarks>
@@ -184,6 +202,15 @@ namespace Agenda.Site
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BotonConsulta;
+
+        /// <summary>
+        /// Control AgregarContacto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AgregarContacto;
 
         /// <summary>
         /// Control GridViewConsulta.

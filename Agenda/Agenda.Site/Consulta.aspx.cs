@@ -17,32 +17,76 @@ namespace Agenda.Site
                 UserName.Text = Convert.ToString(Request.Cookies["LoginCookieVar"]["User"]);
                 CargarDropDownPaises();
                 CargarContactoInternoList();
+                CargarAreaList();
+                CargarActivoList();
+                CargarFechaDesde();
+                CargarFechaHasta();
             }
+        }
+
+        protected void AgregarContacto_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void CargarFechaDesde()
+        {
+            FechaDesdeBox.Text = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");
+        }
+
+        protected void CargarFechaHasta()
+        {
+            FechaHastaBox.Text = DateTime.Now.ToString("yyyy-MM-dd");
         }
 
         protected void CargarDropDownPaises()
         {
-            Paises.Items.Add(new ListItem("Argentina", "1"));
-            Paises.Items.Add(new ListItem("Brasil", "2"));
-            Paises.Items.Add(new ListItem("Uruaguay", "3"));
-            Paises.Items.Add(new ListItem("Paraguay", "4"));
+            Paises.Items.Add(new ListItem("Argentina", "Argentina"));
+            Paises.Items.Add(new ListItem("Brasil", "Brasil"));
+            Paises.Items.Add(new ListItem("Uruaguay", "Uruguay"));
+            Paises.Items.Add(new ListItem("Paraguay", "Paraguay"));
 
-            Paises.Items.Insert(0, new ListItem("Todos", "0"));
+            Paises.Items.Insert(0, new ListItem("Todos", "Todos"));
+        }
+
+
+        protected void CargarContactoInternoList()
+        {
+            ContactoInternoList.Items.Add(new ListItem("Si", "Si"));
+            ContactoInternoList.Items.Add(new ListItem("No", "No"));
+
+            ContactoInternoList.Items.Insert(0, new ListItem("Todos", "Todos"));
+        }
+
+        protected void CargarAreaList()
+        {
+            AreaList.Items.Add(new ListItem("Marketing", "Marketing"));
+            AreaList.Items.Add(new ListItem("Finanzas", "Finanzas"));
+            AreaList.Items.Add(new ListItem("RRHH", "RRHH"));
+            AreaList.Items.Add(new ListItem("Operaciones", "Operaciones"));
+
+            AreaList.Items.Insert(0, new ListItem("Todos", "Todos"));
+        }
+
+        protected void CargarActivoList()
+        {
+            ActivoList.Items.Add(new ListItem("Si", "Si"));
+            ActivoList.Items.Add(new ListItem("No", "No"));
+
+            ActivoList.Items.Insert(0, new ListItem("Todos", "Todos"));
         }
 
         protected void LimpiarCampos_Click(object sender, EventArgs e)
         {
-            Nombre.Text = "";
-            Apellido.Text = "";
-            Paises.SelectedValue = "0";
-        }
-
-        protected void CargarContactoInternoList()
-        {
-            ContactoInternoList.Items.Add(new ListItem("Si", "1"));
-            ContactoInternoList.Items.Add(new ListItem("No", "2"));
-
-            ContactoInternoList.Items.Insert(0, new ListItem("Todos", "0"));
+            NombreApellido.Text = "";
+            Paises.SelectedValue = "Todos";
+            Localidad.Text = "";
+            ContactoInternoList.SelectedValue = "Todos";
+            OrganizacionBox.Text = "";
+            AreaList.SelectedValue = "Todos";
+            ActivoList.SelectedValue = "Todos";
+            CargarFechaDesde();
+            CargarFechaHasta();
         }
 
         protected void Consultar(Object sender, EventArgs e)
@@ -55,17 +99,74 @@ namespace Agenda.Site
             {
                 bool incluir = true;
 
-                if (!string.IsNullOrEmpty(Nombre.Text))
+                //filtro por nombre y apellido
+                if (!string.IsNullOrEmpty(NombreApellido.Text))
                 {
-                    if (!contacto.Nombre.Equals(Nombre.Text))
+                    if (!contacto.NombreApellido.Equals(NombreApellido.Text))
                     {
                         incluir = false;
                     }
                 }
 
-                if (!string.IsNullOrEmpty(Apellido.Text))
+
+                //filtro por paises
+                if (!string.IsNullOrEmpty(Paises.SelectedValue) && Paises.SelectedValue != "Todos")
                 {
-                    if (!contacto.Apellido.Equals(Apellido.Text))
+                    if (!contacto.Pais.Equals(Paises.SelectedValue))
+                    {
+                        incluir = false;
+                    }
+                }
+
+                //filtro por localidad
+                if (!string.IsNullOrEmpty(Localidad.Text))
+                {
+                    if (!contacto.Localidad.Equals(Localidad.Text))
+                    {
+                        incluir = false;
+                    }
+                }
+
+                //filtro por fecha de ingreso
+                if (!string.IsNullOrEmpty(FechaDesdeBox.Text) && !string.IsNullOrEmpty(FechaHastaBox.Text))
+                {
+                    if ((contacto.Fecha_ingreso < Convert.ToDateTime(FechaDesdeBox.Text)) || (contacto.Fecha_ingreso > Convert.ToDateTime(FechaHastaBox.Text)))
+                    {
+                        incluir = false;
+                    }
+                }
+
+                //filtro por contacto interno
+                if (!string.IsNullOrEmpty(ContactoInternoList.SelectedValue) && ContactoInternoList.SelectedValue != "Todos")
+                {
+                    if (!contacto.Contacto_interno.Equals(ContactoInternoList.SelectedValue))
+                    {
+                        incluir = false;
+                    }
+                }
+
+                //filtro por organizacion
+                if (!string.IsNullOrEmpty(OrganizacionBox.Text))
+                {
+                    if (!contacto.Organizacion.Equals(OrganizacionBox.Text))
+                    {
+                        incluir = false;
+                    }
+                }
+
+                //filtro por area
+                if (!string.IsNullOrEmpty(AreaList.SelectedValue) && AreaList.SelectedValue != "Todos")
+                {
+                    if (!contacto.Area.Equals(AreaList.SelectedValue))
+                    {
+                        incluir = false;
+                    }
+                }
+
+                //filtro por activo
+                if (!string.IsNullOrEmpty(ActivoList.SelectedValue) && ActivoList.SelectedValue != "Todos")
+                {
+                    if (!contacto.Activo.Equals(ActivoList.SelectedValue))
                     {
                         incluir = false;
                     }
@@ -80,10 +181,11 @@ namespace Agenda.Site
             GridViewConsulta.DataSource = gridData;
             GridViewConsulta.DataBind();
 
-            //foreach (GridViewRow row in GridViewConsulta.Rows)
-            //{
-            //    row.Cells[4].Text = row.Cells[4].Text.Remove(10, 11);
-            //}
+            // Elimina la hora en el GRID
+            foreach (GridViewRow row in GridViewConsulta.Rows)
+            {
+                row.Cells[11].Text = row.Cells[11].Text.Split()[0];
+            }
         }
 
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Agenda.Entity
 {
-    public class ExampleFilter
+    public class FiltroContacto
     {
         public string value { get; set; }
     }

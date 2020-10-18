@@ -8,12 +8,9 @@
 .TextoConsulta {
     color: midnightblue;
     font-family: Arial;
-    font-size: 17pt;
+    font-size: 10pt;
 }
 
-.MargenColumna {
-    margin-right: 500px;
-}
 
 .Cajas {
     Width: 250px;
@@ -26,4 +23,26 @@
     Height:40px;
     background-color: Green;
     Font-Size:Larger;
+}
+
+.Container {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.tr_filtros td{
+    width: 20%;
+    text-align: justify;
+    background-color: gainsboro;
+    padding: 10px;
+}
+
+.tabla_filtros{
+    margin: 10px;
+}
+
+.grilla_contactos{
+    margin:10px;
 }
