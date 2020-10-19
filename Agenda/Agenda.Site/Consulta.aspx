@@ -82,7 +82,7 @@
 
                 <asp:Button ID="LimpiarCampos" runat="server" Text="Limpiar Campos" OnClick="LimpiarCampos_Click"  CssClass="button"/>
                 <asp:Button ID="BotonConsulta" runat="server" Text="Consultar" OnClick="Consultar"  CssClass="button"/>
-                <asp:Button ID="AgregarContacto" runat="server" Text="Nuevo contacto" OnClick="AgregarContacto_Click"  CssClass="button"/>
+                <asp:Button ID="AgregarContacto" runat="server" Text="Nuevo contacto" OnClick="NuevoContacto_Click"  CssClass="buttonBlue"/>
 
 
             <asp:GridView ID="GridViewConsulta" runat="server" Text="Texto" AutoGenerateColumns="true" RowStyle-HorizontalAlign="Center"

@@ -23,6 +23,17 @@
     Height:40px;
     background-color: Green;
     Font-Size:Larger;
+    color: white;
+    border-radius: 4px
+}
+
+.buttonBlue {
+    Width: 350px;
+    Height: 40px;
+    background-color: darkblue;
+    Font-Size: Larger;
+    color: white;
+    border-radius: 4px
 }
 
 .Container {
@@ -33,14 +44,14 @@
 }
 
 .tr_filtros td{
-    width: 20%;
+    width: 350px;
     text-align: justify;
     background-color: gainsboro;
     padding: 10px;
 }
 
-.tabla_filtros{
-    margin: 10px;
+.tabla_filtros {
+    margin: 10px 70px;
 }
 
 .grilla_contactos{

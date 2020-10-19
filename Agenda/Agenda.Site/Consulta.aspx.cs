@@ -19,14 +19,14 @@ namespace Agenda.Site
                 CargarContactoInternoList();
                 CargarAreaList();
                 CargarActivoList();
-                CargarFechaDesde();
-                CargarFechaHasta();
+                //CargarFechaDesde();
+                //CargarFechaHasta();
             }
         }
 
-        protected void AgregarContacto_Click(object sender, EventArgs e)
+        protected void NuevoContacto_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("NuevoContacto.aspx");
         }
 
         protected void CargarFechaDesde()
