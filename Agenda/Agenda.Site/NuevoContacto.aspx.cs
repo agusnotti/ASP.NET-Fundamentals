@@ -37,11 +37,11 @@ namespace Agenda.Site
                     Contacto_interno = ContactoInternoList.SelectedValue,
                     Organizacion = OrganizacionBox.Text,
                     Area = AreaList.SelectedValue,
-                    //Fecha_ingreso = FechaIngresoContacto.Text,
+                    Fecha_ingreso = DateTime.Now,
                     Activo = ActivoList.SelectedValue,
                     Direccion = DireccionContacto.Text,
-                    //Telefono_fijo = TelFijoConacto,
-                    //Telefono_celular = CelContacto;
+                    Telefono_fijo = Int64.Parse(TelFijoContacto.Text),
+                    Telefono_celular = Int64.Parse(CelContacto.Text),
                     Email = MailContacto.Text,
                     Skype = CuentaSkype.Text
                 };
@@ -66,11 +66,10 @@ namespace Agenda.Site
             ContactoInternoList.SelectedValue = "Todos";
             OrganizacionBox.Text = "";
             AreaList.SelectedValue = "Todos";
-            //FechaIngresoContacto.Text,
             ActivoList.SelectedValue = "Todos";
             DireccionContacto.Text = "";
-            //TelFijoConacto,
-            //CelContacto;
+            //TelFijoContacto = "";
+            //CelContacto = "";
             MailContacto.Text = "";
             CuentaSkype.Text = "";
         }

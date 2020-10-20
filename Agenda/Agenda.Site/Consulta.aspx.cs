@@ -1,7 +1,9 @@
 ﻿using Agenda.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -188,37 +190,64 @@ namespace Agenda.Site
             }
         }
 
-
+ 
         protected void GridViewConsulta_RowCommand(Object sender, GridViewCommandEventArgs e)
         {
             switch (e.CommandName)
             {
-                case "Accion1":
+                case "View":
                     //Obtenemos el índice del registro seleccionado
                     int indiceBuscar = Convert.ToInt32(e.CommandArgument);
                     //Obtenemos la fila del registro
                     GridViewRow rowBuscar = GridViewConsulta.Rows[indiceBuscar];
 
-                    GridViewConsulta_Accion1(rowBuscar);
+                    GridViewConsulta_View(rowBuscar);
                     break;
 
-                case "Accion2":
+                case "Edit":
                     int indiceEditar = Convert.ToInt32(e.CommandArgument);
                     GridViewRow rowEditar = GridViewConsulta.Rows[indiceEditar];
 
-                    GridViewConsulta_Accion2(rowEditar);
+                    GridViewConsulta_Edit(rowEditar);
+                    break;
+
+                case "Delete":
+                    int indiceEliminar = Convert.ToInt32(e.CommandArgument);
+                    GridViewRow rowEliminar = GridViewConsulta.Rows[indiceEliminar];
+
+                    GridViewConsulta_Delete(rowEliminar);
+                    break;
+
+                case "Activate":
+                    int indiceActivar = Convert.ToInt32(e.CommandArgument);
+                    GridViewRow rowActivar = GridViewConsulta.Rows[indiceActivar];
+
+                    GridViewConsulta_Activate(rowActivar);
                     break;
             }
         }
 
-        protected void GridViewConsulta_Accion1(GridViewRow row)
+        protected void GridViewConsulta_View(GridViewRow row)
         {
-            //Funcionalidad Acción 1
+            //Funcionalidad View
         }
 
-        protected void GridViewConsulta_Accion2(GridViewRow row)
+        protected void GridViewConsulta_Edit(GridViewRow row)
         {
-            //Funcionalidad Acción 2
+            //Funcionalidad Edit
         }
-    }
+
+        protected void GridViewConsulta_Delete(GridViewRow row)
+        {
+            //funcionalidad Delete
+
+
+        }
+
+        protected void GridViewConsulta_Activate(GridViewRow row)
+        {
+            //funcionalidad Activate
+        }
+
+    }   
 }

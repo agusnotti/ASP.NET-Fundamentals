@@ -27,19 +27,19 @@
                     <td class="auto-style1">
                         <asp:Label ID="NombreApellido" runat="server" Text="Nombre y Apellido: " CssClass="TextoConsulta"></asp:Label>
                         <asp:TextBox ID="NombreApellidoContacto" runat="server" CssClass="Consulta"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="ValidatorNombreApellido" runat="server" ErrorMessage="Ingrese un nombre y apellido" ForeColor="Red" ControlToValidate="NombreApellidoContacto"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="ValidatorNombreApellido" ValidationGroup="AgregarContactoGroup" runat="server" ErrorMessage="Ingrese un nombre y apellido" ForeColor="Red" ControlToValidate="NombreApellidoContacto"></asp:RequiredFieldValidator>
                     </td>
                     <%-- Genero --%>
                     <td>
                         <asp:Label ID="Genero" runat="server" Text="Genero: " CssClass="TextoConsulta"></asp:Label>
                         <asp:DropDownList ID="ComboGenero" runat="server" CssClass="Consulta"></asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="GeneroValidator" runat="server" ErrorMessage="Seleccione genero" ForeColor="Red" ControlToValidate="ComboGenero"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="GeneroValidator" ValidationGroup="AgregarContactoGroup" runat="server" ErrorMessage="Seleccione genero" ForeColor="Red" ControlToValidate="ComboGenero" InitialValue="-"></asp:RequiredFieldValidator>
                     </td>
                     <%-- Pais --%>
                     <td>
                         <asp:Label ID="LabelPaises" runat="server" Text="Pais: " CssClass="TextoConsulta"></asp:Label>
                         <asp:DropDownList ID="Paises" runat="server" CssClass="Consulta"></asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="PaisValidator" runat="server" ErrorMessage="Seleccione pais" ForeColor="Red" ControlToValidate="Paises"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="PaisValidator" ValidationGroup="AgregarContactoGroup" runat="server" ErrorMessage="Seleccione pais" ForeColor="Red" ControlToValidate="Paises" InitialValue="Todos"></asp:RequiredFieldValidator>
                     </td>
                 </tr>
                 <tr class="tr_filtros">
@@ -52,7 +52,7 @@
                     <td>
                         <asp:Label ID="LabelContactoInterno" runat="server" Text="Contacto interno: " CssClass="TextoConsulta"></asp:Label>
                         <asp:DropDownList ID="ContactoInternoList" runat="server"></asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="ContactoInternoValidato" runat="server" ErrorMessage="Seleccione contacto interno" ForeColor="Red" ControlToValidate="ContactoInternoList"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="ContactoInternoValidato" ValidationGroup="AgregarContactoGroup" runat="server" ErrorMessage="Seleccione contacto interno" ForeColor="Red" ControlToValidate="ContactoInternoList" InitialValue="Todos"></asp:RequiredFieldValidator>
 
                     </td>
                     <%-- Organizacion --%>
@@ -71,7 +71,7 @@
                     <td>
                         <asp:Label ID="Activo" runat="server" Text="Activo: " CssClass="TextoConsulta"></asp:Label>
                         <asp:DropDownList ID="ActivoList" runat="server"></asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="ActivoValidator" runat="server" ErrorMessage="Seleccione si el contacto esta activo" ForeColor="Red" ControlToValidate="ActivoList"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="ActivoValidator" ValidationGroup="AgregarContactoGroup" runat="server" ErrorMessage="Seleccione si el contacto esta activo" ForeColor="Red" ControlToValidate="ActivoList" InitialValue="Todos"></asp:RequiredFieldValidator>
                     </td>
                     <%-- Direccion --%>
                     <td class="auto-style1">
@@ -83,18 +83,20 @@
                     <%-- Tel fijo interno --%>
                     <td class="auto-style1">
                         <asp:Label ID="TelFijo" runat="server" Text="Telefono Fijo - interno: " CssClass="TextoConsulta"></asp:Label>
-                        <asp:TextBox ID="TelFijoConacto" runat="server" CssClass="Consulta"></asp:TextBox>
+                        <asp:TextBox ID="TelFijoContacto" Text="0" TextMode="Number" runat="server" CssClass="Consulta"></asp:TextBox>
+
                     </td>
                     <%-- Tel Celular --%>
                     <td>
                         <asp:Label ID="Celular" runat="server" Text="Telefono Celular: " CssClass="TextoConsulta"></asp:Label>
-                        <asp:TextBox ID="CelContacto" runat="server"  CssClass="Consulta"></asp:TextBox>
+                        <asp:TextBox ID="CelContacto" runat="server" Text="0"  TextMode="Number" CssClass="Consulta"></asp:TextBox>
                     </td>
                     <%-- Email --%>
                     <td>
                         <asp:Label ID="Mail" runat="server" Text="E-mail: " CssClass="TextoConsulta"></asp:Label>
                         <asp:TextBox ID="MailContacto" runat="server"  CssClass="Consulta"></asp:TextBox>
-                        <asp:RegularExpressionValidator ID="EmailValidator" runat="server" ErrorMessage="Ingrese su email" ForeColor="Red" ControlToValidate="MailContacto" ValidationExpression="@"></asp:RegularExpressionValidator>
+                        <asp:RegularExpressionValidator ID="EmailValidator" runat="server" ErrorMessage="Formato invalido" ForeColor="Red" ControlToValidate="MailContacto" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
+                        <asp:RequiredFieldValidator ID="EmailValidatorRequired" ValidationGroup="AgregarContactoGroup" runat="server" ErrorMessage="Ingrese el correo" ForeColor="Red" ControlToValidate="MailContacto"></asp:RequiredFieldValidator>
                     </td>
                 </tr>
                 <tr class="tr_filtros">
@@ -103,16 +105,17 @@
                         <asp:Label ID="Skype" runat="server" Text="Cuenta skype: " CssClass="TextoConsulta"></asp:Label>
                         <asp:TextBox ID="CuentaSkype" runat="server"  CssClass="Consulta"></asp:TextBox>
                     </td>
-                    <td>
+                    <td></td>
+                   <%-- <td>
                         <asp:Label ID="FechaIngreso" runat="server" Text="Fecha de ingreso: " CssClass="TextoConsulta"></asp:Label>
-                        <asp:TextBox ID="FechaIngresoContacto" runat="server"  CssClass="Consulta"></asp:TextBox>
-                    </td>
+                        <asp:TextBox ID="FechaIngresoContacto" runat="server" TextMode="Date"  CssClass="Consulta"></asp:TextBox>
+                    </td>--%>
                     <td></td>
                 </tr>
             </table>
         
-                <asp:Button ID="AgregarContacto" runat="server" Text="Guardar" OnClick="GuardarContacto_Click"  CssClass="button"/>
-                <asp:Button ID="Salir" runat="server" Text="Salir" OnClick="Salir_Click"  CssClass="buttonBlue"/>
+                <asp:Button ID="AgregarContacto" ValidationGroup="AgregarContactoGroup" runat="server" Text="Guardar" OnClick="GuardarContacto_Click"  CssClass="button"/>
+                <asp:Button ID="Salir" runat="server" Text="Salir" OnClick="Salir_Click"  CssClass="buttonBlue" />
         </form>
     </div>
 </body>

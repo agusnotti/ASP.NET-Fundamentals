@@ -18,8 +18,8 @@ namespace Agenda.Entity
         public DateTime Fecha_ingreso { get; set; }
         public string Activo { get; set; }
         public string Direccion { get; set; }
-        public int Telefono_fijo { get; set; }
-        public int Telefono_celular { get; set; }
+        public long Telefono_fijo { get; set; }
+        public long Telefono_celular { get; set; }
         public string Email { get; set; }
         public string Skype { get; set; }
     }

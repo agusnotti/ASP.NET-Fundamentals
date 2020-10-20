@@ -231,13 +231,13 @@ namespace Agenda.Site
         protected global::System.Web.UI.WebControls.Label TelFijo;
 
         /// <summary>
-        /// Control TelFijoConacto.
+        /// Control TelFijoContacto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TelFijoConacto;
+        protected global::System.Web.UI.WebControls.TextBox TelFijoContacto;
 
         /// <summary>
         /// Control Celular.
@@ -285,6 +285,15 @@ namespace Agenda.Site
         protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailValidator;
 
         /// <summary>
+        /// Control EmailValidatorRequired.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator EmailValidatorRequired;
+
+        /// <summary>
         /// Control Skype.
         /// </summary>
         /// <remarks>
@@ -301,24 +310,6 @@ namespace Agenda.Site
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox CuentaSkype;
-
-        /// <summary>
-        /// Control FechaIngreso.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FechaIngreso;
-
-        /// <summary>
-        /// Control FechaIngresoContacto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox FechaIngresoContacto;
 
         /// <summary>
         /// Control AgregarContacto.

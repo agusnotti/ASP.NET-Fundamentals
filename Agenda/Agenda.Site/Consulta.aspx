@@ -86,13 +86,17 @@
 
 
             <asp:GridView ID="GridViewConsulta" runat="server" Text="Texto" AutoGenerateColumns="true" RowStyle-HorizontalAlign="Center"
-                             HeaderStyle-CssClass ="TextoConsulta" CssClass="grilla_contactos" Width="100%" GridLines="Horizontal" OnRowCommand="GridViewConsulta_RowCommand">
-                    <Columns> 
-                        
-                       <asp:ButtonField  ButtonType="Image" ImageUrl="Images/zoom.png" CommandName="Accion1"/>
-                       <asp:ButtonField  ButtonType="Image" ImageUrl="Images/edit.png" CommandName="Accion2"/>
-                       <asp:ButtonField  ButtonType="Image" ImageUrl="Images/delete.png" CommandName="Accion3"/>
-                       <asp:ButtonField  ButtonType="Image" ImageUrl="Images/play_pause.png" CommandName="Accion4"/>
+                             HeaderStyle-CssClass="TextoConsulta" CssClass="grilla_contactos" Width="100%" GridLines="Horizontal" OnRowCommand="GridViewConsulta_RowCommand" >
+                    <Columns>                         
+                       <asp:ButtonField  ButtonType="Image" ImageUrl="Images/zoom.png" CommandName="View"/>
+
+                       <asp:ButtonField  ButtonType="Image" ImageUrl="Images/edit.png" CommandName="Edit"/>
+
+                       <asp:ButtonField  ButtonType="Image" ImageUrl="Images/delete.png" CommandName="Delete"/>
+
+                       <asp:ButtonField  ButtonType="Image" ImageUrl="Images/play_pause.png" CommandName="Activate"/>
+
+
                     </Columns>
 
              </asp:GridView>
