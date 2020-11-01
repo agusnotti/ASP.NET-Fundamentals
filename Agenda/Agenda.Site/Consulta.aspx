@@ -85,10 +85,9 @@
                 <asp:Button ID="AgregarContacto" runat="server" Text="Nuevo contacto" OnClick="NuevoContacto_Click"  CssClass="buttonBlue"/>
 
 
-            <asp:GridView ID="GridViewConsulta" runat="server" Text="Texto" AutoGenerateColumns="false" RowStyle-HorizontalAlign="Center"  onrowdeleting="ContactGridView_RowDeleting" 
+            <asp:GridView ID="GridViewConsulta" runat="server" Text="Texto" AutoGenerateColumns="false" RowStyle-HorizontalAlign="Center" DataKeyNames="id" onrowdeleting="ContactGridView_RowDeleting" 
                              HeaderStyle-CssClass="TextoConsulta" CssClass="grilla_contactos" Width="100%" GridLines="Horizontal" OnRowCommand="GridViewConsulta_RowCommand" >
                     <Columns>
-                       <asp:BoundField DataField="id"/>
                        <asp:boundfield datafield="NombreApellido" headertext="Nombre y Apellido"/>
                        <asp:boundfield datafield="Genero" headertext="Genero"/>
                        <asp:boundfield datafield="Pais.nombre" headertext="Pais"/>
@@ -104,9 +103,8 @@
                        <asp:boundfield datafield="Email" headertext="Email"/>
                        <asp:boundfield datafield="Skype" headertext="Skype"/>
 
-                       <asp:ButtonField  ButtonType="Image" ImageUrl="Images/zoom.png" CommandName="View"/>
+                       <asp:ButtonField ButtonType="Image" ImageUrl="Images/zoom.png" CommandName="View"/>
                        <asp:ButtonField  ButtonType="Image" ImageUrl="Images/edit.png" CommandName="Edit"/>
-
                        <asp:ButtonField  ButtonType="Image" ImageUrl="Images/delete.png" CommandName="Delete"/>
                        <asp:ButtonField  ButtonType="Image" ImageUrl="Images/play_pause.png" CommandName="Activate"/>
                     </Columns>

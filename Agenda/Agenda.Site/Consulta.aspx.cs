@@ -193,44 +193,56 @@ namespace Agenda.Site
                 case "View":
                     //Obtenemos el índice del registro seleccionado
                     int indiceBuscar = Convert.ToInt32(e.CommandArgument);
-                    //Obtenemos la fila del registro
-                    GridViewRow rowBuscar = GridViewConsulta.Rows[indiceBuscar];
+                    int idView = Convert.ToInt32(GridViewConsulta.DataKeys[indiceBuscar].Values[0]);
 
-                    GridViewConsulta_View(rowBuscar);
+                    GridViewConsulta_View(idView);
                     break;
 
                 case "Edit":
                     int indiceEditar = Convert.ToInt32(e.CommandArgument);
-                    GridViewRow rowEditar = GridViewConsulta.Rows[indiceEditar];
+                    //obtiene el valor de la columa desde DataKeys usando el indice de la fila
+                    int idEditar = Convert.ToInt32(GridViewConsulta.DataKeys[indiceEditar].Values[0]);
 
-                    GridViewConsulta_Edit(rowEditar);
+                    GridViewConsulta_Edit(idEditar);
                     break;
 
                 case "Delete":
                     int indiceEliminar = Convert.ToInt32(e.CommandArgument);
-                    GridViewRow rowEliminar = GridViewConsulta.Rows[indiceEliminar];
-                    int idContacto = Convert.ToInt32(rowEliminar.Cells[0].Text);
 
-                    GridViewConsulta_Delete(idContacto);
+                    //obtiene el valor de la columa desde DataKeys usando el indice de la fila
+                    int idBorrar = Convert.ToInt32(GridViewConsulta.DataKeys[indiceEliminar].Values[0]);
+
+                    GridViewConsulta_Delete(idBorrar);
                     break;
 
                 case "Activate":
                     int indiceActivar = Convert.ToInt32(e.CommandArgument);
-                    GridViewRow rowActivar = GridViewConsulta.Rows[indiceActivar];
+                    //obtiene el valor de la columa desde DataKeys usando el indice de la fila
+                    int idActivar = Convert.ToInt32(GridViewConsulta.DataKeys[indiceActivar].Values[0]);
 
-                    GridViewConsulta_Activate(rowActivar);
+                    GridViewConsulta_Activate(idActivar);
                     break;
             }
         }
 
-        protected void GridViewConsulta_View(GridViewRow row)
+        protected void GridViewConsulta_View(int id)
         {
-            //Funcionalidad View
+            ContactoBLL contactoBLL = new ContactoBLL();
+            Contacto contacto = contactoBLL.GetContactoByID(id);
+
+            Application["contacto"] = contacto;
+            Application["accion"] = "ver";
+            Response.Redirect("NuevoContacto.aspx");
         }
 
-        protected void GridViewConsulta_Edit(GridViewRow row)
+        protected void GridViewConsulta_Edit(int id)
         {
-            //Funcionalidad Edit
+            ContactoBLL contactoBLL = new ContactoBLL();
+            Contacto contacto = contactoBLL.GetContactoByID(id);
+
+            Application["contacto"] = contacto;
+            Application["accion"] = "editar";
+            Response.Redirect("NuevoContacto.aspx");
         }
 
         protected void GridViewConsulta_Delete(int idContacto)
@@ -243,16 +255,18 @@ namespace Agenda.Site
             List<Contacto> gridData = contactoBLL.GetListContactoByFilter(filtro);
 
             bindGrid(gridData);
-
-
-            //funcionalidad Delete
-
-
         }
 
-        protected void GridViewConsulta_Activate(GridViewRow row)
+        protected void GridViewConsulta_Activate(int idContacto)
         {
-            //funcionalidad Activate
+            ContactoBLL contactoBLL = new ContactoBLL();
+            contactoBLL.Activate(idContacto);
+
+            FiltroContacto filtro = (FiltroContacto)Application["filtro"];
+
+            List<Contacto> gridData = contactoBLL.GetListContactoByFilter(filtro);
+
+            bindGrid(gridData);
         }
 
         private void bindGrid(List<Contacto> gridData)
@@ -263,8 +277,23 @@ namespace Agenda.Site
             //Elimina la hora en el GRID
             foreach (GridViewRow row in GridViewConsulta.Rows)
             {
-                row.Cells[8].Text = row.Cells[8].Text.Split()[0];
-                row.Cells[0].Visible = false;
+                row.Cells[7].Text = row.Cells[7].Text.Split()[0];
+
+                //mensaje de confirmacion delete
+                row.Cells[16].Attributes.Add("onclick", "return confirm(\"¿Desea eliminar el contacto?\")");
+
+                ImageButton imageButton = (ImageButton)row.Cells[17].Controls[0];
+                
+                if (row.Cells[8].Text == "Si")
+                {
+                    imageButton.ImageUrl = "Images/anular.png";
+                    //mensaje de confirmacion inactivacion
+                    row.Cells[17].Attributes.Add("onclick", "return confirm(\"¿Desea inactivar el contacto?\")");
+                } else
+                {
+                    //mensaje de confirmacion de activacion
+                    row.Cells[17].Attributes.Add("onclick", "return confirm(\"¿Desea activar el contacto?\")");
+                }
             }
         }
 

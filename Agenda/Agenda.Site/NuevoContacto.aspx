@@ -18,7 +18,7 @@
 </head>
 <body>
 
-    <h1>Nuevo contacto</h1>
+    <h1 id="titulo" runat="server">Nuevo contacto</h1>
     <div class="Container">
         <form  runat="server">
             <table class="tabla_filtros">
@@ -106,10 +106,6 @@
                         <asp:TextBox ID="CuentaSkype" runat="server"  CssClass="Consulta"></asp:TextBox>
                     </td>
                     <td></td>
-                   <%-- <td>
-                        <asp:Label ID="FechaIngreso" runat="server" Text="Fecha de ingreso: " CssClass="TextoConsulta"></asp:Label>
-                        <asp:TextBox ID="FechaIngresoContacto" runat="server" TextMode="Date"  CssClass="Consulta"></asp:TextBox>
-                    </td>--%>
                     <td></td>
                 </tr>
             </table>

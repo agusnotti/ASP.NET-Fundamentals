@@ -31,7 +31,7 @@ namespace Agenda.BLL
             contacto.id = Convert.ToInt32(resultado["contactID"]);
             contacto.NombreApellido = Convert.ToString(resultado["name_lastname"]);
             contacto.Genero = Convert.ToString(resultado["genre"]);
-            contacto.Pais = new Pais() { id = Convert.ToInt32(resultado["country"])};
+            contacto.Pais = new Pais() { id = Convert.ToInt32(resultado["countryID"])};
             contacto.Localidad = Convert.ToString(resultado["location"]);
             contacto.Contacto_interno = new SiNo() { id = Convert.ToInt32(resultado["internal_contact"])};
             contacto.Area = new Area() { id = Convert.ToInt32(resultado["area"])};
@@ -94,6 +94,20 @@ namespace Agenda.BLL
         public void Delete(int idContacto)
         {
             da.Delete(idContacto);
+        }
+
+        public void Activate(int idContacto)
+        {
+            Contacto contacto = GetContactoByID(idContacto);
+            if(contacto.Activo.id == 0)
+            {
+                contacto.Activo.id = 1;
+            } else
+            {
+                contacto.Activo.id = 0;
+            }
+
+            da.Update(contacto);
         }
     }
 }

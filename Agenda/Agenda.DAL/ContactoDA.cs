@@ -37,8 +37,6 @@ namespace Agenda.DAL
 
                 adapter.Fill(ds);
 
-                da.Dispose();
-
                 return ds;
             }
         }
@@ -76,8 +74,6 @@ namespace Agenda.DAL
 
                     // Ejecuto la query y agrego los datos al dataset
                     adapter.Fill(ds);
-
-                    da.Dispose();
 
                     if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0 && filtroContacto.paginacion != null)
                     {

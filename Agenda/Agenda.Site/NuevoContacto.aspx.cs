@@ -20,8 +20,68 @@ namespace Agenda.Site
                 CargarComboGenero();
                 CargarYesNoLists();
                 CargarAreaList();
+                CargarDatosContacto();
+            }
+        }
+
+        private void CargarDatosContacto()
+        {
+            Contacto contacto = (Contacto)Application["contacto"];
+
+            if(contacto != null)
+            {
+                string accion = (string) Application["accion"];
+                
+                cargarInputs(contacto);
+
+                if (accion.Equals("editar")){
+                    AgregarContacto.Attributes["id"] = Convert.ToString(contacto.id);
+                    titulo.InnerText = "Editar Contacto";
+                    AgregarContacto.Attributes.Add("onclick", "return confirm(\"¿Desea confirmar los cambios realizados al contacto?\")");
+
+                } else if (accion.Equals("ver"))
+                {
+                    NombreApellidoContacto.Enabled = false;
+                    ComboGenero.Enabled = false;
+                    Paises.Enabled = false;
+                    Localidad.Enabled = false;
+                    ContactoInternoList.Enabled = false;
+                    OrganizacionBox.Enabled = false;
+                    AreaList.Enabled = false;
+                    ActivoList.Enabled = false;
+                    DireccionContacto.Enabled = false;
+                    TelFijoContacto.Enabled = false;
+                    CelContacto.Enabled = false;
+                    MailContacto.Enabled = false;
+                    CuentaSkype.Enabled = false;
+                    AgregarContacto.Visible = false;
+
+                    titulo.InnerText = "Ver Contacto";
+                }
+            }
+            else
+            {
+                AgregarContacto.Attributes.Add("onclick", "return confirm(\"¿Desea dar de alta el nuevo contacto?\")");
             }
 
+        }
+
+        private void cargarInputs(Contacto contacto)
+        {
+            NombreApellidoContacto.Text = contacto.NombreApellido;
+            ComboGenero.SelectedValue = contacto.Genero;
+            Paises.SelectedValue = Convert.ToString(contacto.Pais.id);
+            Localidad.Text = contacto.Localidad;
+            ContactoInternoList.SelectedValue = Convert.ToString(contacto.Contacto_interno.id);
+            OrganizacionBox.Text = contacto.Organizacion;
+            AreaList.SelectedValue = Convert.ToString(contacto.Area.id);
+            //Fecha_ingreso = DateTime.Now;
+            ActivoList.SelectedValue = Convert.ToString(contacto.Activo.id);
+            DireccionContacto.Text = contacto.Direccion;
+            TelFijoContacto.Text = Convert.ToString(contacto.Telefono_fijo);
+            CelContacto.Text = Convert.ToString(contacto.Telefono_celular);
+            MailContacto.Text = contacto.Email;
+            CuentaSkype.Text = contacto.Skype;
         }
 
         protected void GuardarContacto_Click(object sender, EventArgs e)
@@ -32,7 +92,7 @@ namespace Agenda.Site
                 {
                     NombreApellido = NombreApellidoContacto.Text,
                     Genero = ComboGenero.SelectedValue,
-                    Pais = new Pais() {id = Convert.ToInt32(Paises.SelectedValue)},
+                    Pais = new Pais() { id = Convert.ToInt32(Paises.SelectedValue) },
                     Localidad = Localidad.Text,
                     Contacto_interno = new SiNo() { id = Convert.ToInt32(ContactoInternoList.SelectedValue) },
                     Organizacion = OrganizacionBox.Text,
@@ -47,8 +107,21 @@ namespace Agenda.Site
                 };
 
                 ContactoBLL contactoBLL = new ContactoBLL();
-                contactoBLL.Insert(nuevoContacto);
-                //LimpiarCampos();
+                string accion = (string)Application["accion"];
+
+                if (accion == "editar")
+                {
+                    //le agrego el id a contacto
+                    nuevoContacto.id = Convert.ToInt32(AgregarContacto.Attributes["id"]);
+                    contactoBLL.Update(nuevoContacto);
+                }
+                else
+                {
+                    contactoBLL.Insert(nuevoContacto);
+                }
+
+                Application["accion"] = null;
+                Application["contacto"] = null;
                 Response.Redirect("Consulta.aspx");
             }
         }
@@ -72,6 +145,8 @@ namespace Agenda.Site
 
         protected void Salir_Click(object sender, EventArgs e)
         {
+            Application["accion"] = null;
+            Application["contacto"] = null;
             Response.Redirect("Consulta.aspx");
         }
 
@@ -109,7 +184,6 @@ namespace Agenda.Site
 
         protected void CargarYesNoLists()
         {
-
             SiNoBLL sinoBLL = new SiNoBLL();
 
             List<SiNo> listaSiNo = sinoBLL.getSiNoList();
@@ -119,7 +193,6 @@ namespace Agenda.Site
                 ContactoInternoList.Items.Add(new ListItem(sino.valor, Convert.ToString(sino.id)));
                 ActivoList.Items.Add(new ListItem(sino.valor, Convert.ToString(sino.id)));
             }
-
         }
     }
 }
