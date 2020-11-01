@@ -1,10 +1,12 @@
-﻿using Agenda.Entity;
+﻿using Agenda.BLL;
+using Agenda.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -17,10 +19,9 @@ namespace Agenda.Site
             if (!IsPostBack)
             {
                 UserName.Text = Convert.ToString(Request.Cookies["LoginCookieVar"]["User"]);
-                CargarDropDownPaises();
-                CargarContactoInternoList();
+                CargarPaisesList();
                 CargarAreaList();
-                CargarActivoList();
+                CargarYesNoLists();
                 //CargarFechaDesde();
                 //CargarFechaHasta();
             }
@@ -31,6 +32,8 @@ namespace Agenda.Site
             Response.Redirect("NuevoContacto.aspx");
         }
 
+
+        //CARCA DE COMBOS
         protected void CargarFechaDesde()
         {
             FechaDesdeBox.Text = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");
@@ -41,156 +44,148 @@ namespace Agenda.Site
             FechaHastaBox.Text = DateTime.Now.ToString("yyyy-MM-dd");
         }
 
-        protected void CargarDropDownPaises()
+        protected void CargarPaisesList()
         {
-            Paises.Items.Add(new ListItem("Argentina", "Argentina"));
-            Paises.Items.Add(new ListItem("Brasil", "Brasil"));
-            Paises.Items.Add(new ListItem("Uruaguay", "Uruguay"));
-            Paises.Items.Add(new ListItem("Paraguay", "Paraguay"));
+            PaisBLL paisBLL = new PaisBLL();           
 
-            Paises.Items.Insert(0, new ListItem("Todos", "Todos"));
-        }
+            List<Pais> listaPaises = paisBLL.getPaises();
 
+            foreach (Pais pais in listaPaises)
+            {
+                Paises.Items.Add(new ListItem(pais.nombre, Convert.ToString(pais.id)));
+            }
 
-        protected void CargarContactoInternoList()
-        {
-            ContactoInternoList.Items.Add(new ListItem("Si", "Si"));
-            ContactoInternoList.Items.Add(new ListItem("No", "No"));
-
-            ContactoInternoList.Items.Insert(0, new ListItem("Todos", "Todos"));
+            Paises.Items.Insert(0, new ListItem("Todos", "0"));
         }
 
         protected void CargarAreaList()
         {
-            AreaList.Items.Add(new ListItem("Marketing", "Marketing"));
-            AreaList.Items.Add(new ListItem("Finanzas", "Finanzas"));
-            AreaList.Items.Add(new ListItem("RRHH", "RRHH"));
-            AreaList.Items.Add(new ListItem("Operaciones", "Operaciones"));
 
-            AreaList.Items.Insert(0, new ListItem("Todos", "Todos"));
-        }
+            AreaBLL areaBLL = new AreaBLL();
 
-        protected void CargarActivoList()
+            List<Area> listaAreas = areaBLL.getAreas();
+
+            foreach(Area area in listaAreas)
+            {
+                AreaList.Items.Add(new ListItem(area.nombre, Convert.ToString(area.id)));
+            }
+
+            AreaList.Items.Insert(0, new ListItem("Todos", "0"));
+        }        
+
+
+        protected void CargarYesNoLists()
         {
-            ActivoList.Items.Add(new ListItem("Si", "Si"));
-            ActivoList.Items.Add(new ListItem("No", "No"));
 
-            ActivoList.Items.Insert(0, new ListItem("Todos", "Todos"));
+            SiNoBLL sinoBLL = new SiNoBLL();
+
+            List<SiNo> listaSiNo = sinoBLL.getSiNoList();
+
+            foreach (SiNo sino in listaSiNo)
+            {
+                ContactoInternoList.Items.Add(new ListItem(sino.valor, Convert.ToString(sino.id)));
+                ActivoList.Items.Add(new ListItem(sino.valor, Convert.ToString(sino.id)));
+            }
+
+            ContactoInternoList.Items.Insert(0, new ListItem("Todos", "-1"));
+            ActivoList.Items.Insert(0, new ListItem("Todos", "-1"));
+
         }
 
+        //CONSULTA CON FILTROS
+        protected void Consultar(Object sender, EventArgs e)
+        {
+            ContactoBLL contactoBLL = new ContactoBLL();
+
+            FiltroContacto filtro = getFiltro();    
+
+            List<Contacto> gridData = contactoBLL.GetListContactoByFilter(filtro);
+
+            bindGrid(gridData);
+        }
+
+        //OBTIENE LOS FILTROS PARA HACER LA CONSULTA
+        private FiltroContacto getFiltro()
+        {
+            FiltroContacto filtro = new FiltroContacto();
+
+            //filtro por nombre y apellido
+            if (!string.IsNullOrEmpty(NombreApellido.Text))
+            {
+                filtro.nombreApellido = NombreApellido.Text;
+            }
+
+
+            //filtro por paises
+            if (!string.IsNullOrEmpty(Paises.SelectedValue) && Paises.SelectedValue != "0")
+            {
+                filtro.pais = Convert.ToInt32(Paises.SelectedValue);
+            }
+
+            //filtro por localidad
+            if (!string.IsNullOrEmpty(Localidad.Text))
+            {
+                filtro.localidad = Localidad.Text;
+            }
+
+            //filtro por fecha de ingreso
+            if (!string.IsNullOrEmpty(FechaDesdeBox.Text))
+            {
+                filtro.fecha_desde = Convert.ToDateTime(FechaDesdeBox.Text);
+            }
+
+            if (!string.IsNullOrEmpty(FechaHastaBox.Text))
+            {
+                //FALTA ACOMODAR LA HORA A 23.59.59
+                filtro.fecha_hasta = Convert.ToDateTime(FechaHastaBox.Text);
+            }
+
+            //filtro por contacto interno
+            if (!string.IsNullOrEmpty(ContactoInternoList.SelectedValue) && ContactoInternoList.SelectedValue != "-1")
+            {
+                filtro.contactoInterno = Convert.ToInt32(ContactoInternoList.SelectedValue);
+            }
+
+            //filtro por organizacion
+            if (!string.IsNullOrEmpty(OrganizacionBox.Text))
+            {
+                filtro.organizacion = OrganizacionBox.Text;
+            }
+
+            //filtro por area
+            if (!string.IsNullOrEmpty(AreaList.SelectedValue) && AreaList.SelectedValue != "0")
+            {
+                filtro.area = Convert.ToInt32(AreaList.SelectedValue);
+            }
+
+            //filtro por activo
+            if (!string.IsNullOrEmpty(ActivoList.SelectedValue) && ActivoList.SelectedValue != "-1")
+            {
+                filtro.activo = Convert.ToInt32(ActivoList.SelectedValue);
+            }
+
+
+            Application["filtro"] = filtro;
+
+            return filtro;
+        }
+
+
+        //LIMPIA CAMPOS DE FILTROS
         protected void LimpiarCampos_Click(object sender, EventArgs e)
         {
             NombreApellido.Text = "";
-            Paises.SelectedValue = "Todos";
+            Paises.SelectedValue = "0";
             Localidad.Text = "";
-            ContactoInternoList.SelectedValue = "Todos";
+            ContactoInternoList.SelectedValue = "-1";
             OrganizacionBox.Text = "";
-            AreaList.SelectedValue = "Todos";
-            ActivoList.SelectedValue = "Todos";
+            AreaList.SelectedValue = "0";
+            ActivoList.SelectedValue = "-1";
             CargarFechaDesde();
             CargarFechaHasta();
         }
 
-        protected void Consultar(Object sender, EventArgs e)
-        {
-            List<Contacto> contactos = (List<Contacto>)Application["Contactos"];
 
-            List<Contacto> gridData = new List<Contacto>();
-
-            foreach (Contacto contacto in contactos)
-            {
-                bool incluir = true;
-
-                //filtro por nombre y apellido
-                if (!string.IsNullOrEmpty(NombreApellido.Text))
-                {
-                    if (!contacto.NombreApellido.Equals(NombreApellido.Text))
-                    {
-                        incluir = false;
-                    }
-                }
-
-
-                //filtro por paises
-                if (!string.IsNullOrEmpty(Paises.SelectedValue) && Paises.SelectedValue != "Todos")
-                {
-                    if (!contacto.Pais.Equals(Paises.SelectedValue))
-                    {
-                        incluir = false;
-                    }
-                }
-
-                //filtro por localidad
-                if (!string.IsNullOrEmpty(Localidad.Text))
-                {
-                    if (!contacto.Localidad.Equals(Localidad.Text))
-                    {
-                        incluir = false;
-                    }
-                }
-
-                //filtro por fecha de ingreso
-                if (!string.IsNullOrEmpty(FechaDesdeBox.Text) && !string.IsNullOrEmpty(FechaHastaBox.Text))
-                {
-                    if ((contacto.Fecha_ingreso < Convert.ToDateTime(FechaDesdeBox.Text)) || (contacto.Fecha_ingreso > Convert.ToDateTime(FechaHastaBox.Text)))
-                    {
-                        incluir = false;
-                    }
-                }
-
-                //filtro por contacto interno
-                if (!string.IsNullOrEmpty(ContactoInternoList.SelectedValue) && ContactoInternoList.SelectedValue != "Todos")
-                {
-                    if (!contacto.Contacto_interno.Equals(ContactoInternoList.SelectedValue))
-                    {
-                        incluir = false;
-                    }
-                }
-
-                //filtro por organizacion
-                if (!string.IsNullOrEmpty(OrganizacionBox.Text))
-                {
-                    if (!contacto.Organizacion.Equals(OrganizacionBox.Text))
-                    {
-                        incluir = false;
-                    }
-                }
-
-                //filtro por area
-                if (!string.IsNullOrEmpty(AreaList.SelectedValue) && AreaList.SelectedValue != "Todos")
-                {
-                    if (!contacto.Area.Equals(AreaList.SelectedValue))
-                    {
-                        incluir = false;
-                    }
-                }
-
-                //filtro por activo
-                if (!string.IsNullOrEmpty(ActivoList.SelectedValue) && ActivoList.SelectedValue != "Todos")
-                {
-                    if (!contacto.Activo.Equals(ActivoList.SelectedValue))
-                    {
-                        incluir = false;
-                    }
-                }
-
-                if (incluir)
-                {
-                    gridData.Add(contacto);
-                }
-            }
-
-            GridViewConsulta.DataSource = gridData;
-            GridViewConsulta.DataBind();
-
-            // Elimina la hora en el GRID
-            foreach (GridViewRow row in GridViewConsulta.Rows)
-            {
-                row.Cells[11].Text = row.Cells[11].Text.Split()[0];
-            }
-        }
-
- 
         protected void GridViewConsulta_RowCommand(Object sender, GridViewCommandEventArgs e)
         {
             switch (e.CommandName)
@@ -214,8 +209,9 @@ namespace Agenda.Site
                 case "Delete":
                     int indiceEliminar = Convert.ToInt32(e.CommandArgument);
                     GridViewRow rowEliminar = GridViewConsulta.Rows[indiceEliminar];
+                    int idContacto = Convert.ToInt32(rowEliminar.Cells[0].Text);
 
-                    GridViewConsulta_Delete(rowEliminar);
+                    GridViewConsulta_Delete(idContacto);
                     break;
 
                 case "Activate":
@@ -237,8 +233,18 @@ namespace Agenda.Site
             //Funcionalidad Edit
         }
 
-        protected void GridViewConsulta_Delete(GridViewRow row)
+        protected void GridViewConsulta_Delete(int idContacto)
         {
+            ContactoBLL contactoBLL = new ContactoBLL();
+            contactoBLL.Delete(idContacto);
+
+            FiltroContacto filtro = (FiltroContacto)Application["filtro"];
+
+            List<Contacto> gridData = contactoBLL.GetListContactoByFilter(filtro);
+
+            bindGrid(gridData);
+
+
             //funcionalidad Delete
 
 
@@ -247,6 +253,23 @@ namespace Agenda.Site
         protected void GridViewConsulta_Activate(GridViewRow row)
         {
             //funcionalidad Activate
+        }
+
+        private void bindGrid(List<Contacto> gridData)
+        {
+            GridViewConsulta.DataSource = gridData;
+            GridViewConsulta.DataBind();
+
+            //Elimina la hora en el GRID
+            foreach (GridViewRow row in GridViewConsulta.Rows)
+            {
+                row.Cells[8].Text = row.Cells[8].Text.Split()[0];
+                row.Cells[0].Visible = false;
+            }
+        }
+
+        public void ContactGridView_RowDeleting(Object sender, GridViewDeleteEventArgs e)
+        {
         }
 
     }   

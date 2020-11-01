@@ -1,4 +1,5 @@
-﻿using Agenda.Entity;
+﻿using Agenda.BLL;
+using Agenda.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,10 @@ namespace Agenda.Site
 
             if (!IsPostBack)
             {
-                CargarDropDownPaises();
+                CargarPaisesList();
                 CargarComboGenero();
-                CargarContactoInternoList();
+                CargarYesNoLists();
                 CargarAreaList();
-                CargarActivoList();
             }
 
         }
@@ -32,13 +32,13 @@ namespace Agenda.Site
                 {
                     NombreApellido = NombreApellidoContacto.Text,
                     Genero = ComboGenero.SelectedValue,
-                    Pais = Paises.SelectedValue,
+                    Pais = new Pais() {id = Convert.ToInt32(Paises.SelectedValue)},
                     Localidad = Localidad.Text,
-                    Contacto_interno = ContactoInternoList.SelectedValue,
+                    Contacto_interno = new SiNo() { id = Convert.ToInt32(ContactoInternoList.SelectedValue) },
                     Organizacion = OrganizacionBox.Text,
-                    Area = AreaList.SelectedValue,
+                    Area = new Area() { id = Convert.ToInt32(AreaList.SelectedValue) },
                     Fecha_ingreso = DateTime.Now,
-                    Activo = ActivoList.SelectedValue,
+                    Activo = new SiNo() { id = Convert.ToInt32(ActivoList.SelectedValue) },
                     Direccion = DireccionContacto.Text,
                     Telefono_fijo = Int64.Parse(TelFijoContacto.Text),
                     Telefono_celular = Int64.Parse(CelContacto.Text),
@@ -46,12 +46,8 @@ namespace Agenda.Site
                     Skype = CuentaSkype.Text
                 };
 
-                List<Contacto> lista = (List<Contacto>)Application["Contactos"];
-
-                lista.Add(nuevoContacto);
-
-                Application["Contactos"] = lista;
-
+                ContactoBLL contactoBLL = new ContactoBLL();
+                contactoBLL.Insert(nuevoContacto);
                 //LimpiarCampos();
                 Response.Redirect("Consulta.aspx");
             }
@@ -61,14 +57,14 @@ namespace Agenda.Site
         {
             NombreApellidoContacto.Text = "";
             ComboGenero.SelectedValue = "-";
-            Paises.SelectedValue = "Todos";
+            Paises.SelectedValue = "0";
             Localidad.Text = "";
-            ContactoInternoList.SelectedValue = "Todos";
+            ContactoInternoList.SelectedValue = "0";
             OrganizacionBox.Text = "";
-            AreaList.SelectedValue = "Todos";
-            ActivoList.SelectedValue = "Todos";
+            AreaList.SelectedValue = "0";
+            ActivoList.SelectedValue = "0";
             DireccionContacto.Text = "";
-            //TelFijoContacto = "";
+            //TelFijoContacto = 0;
             //CelContacto = "";
             MailContacto.Text = "";
             CuentaSkype.Text = "";
@@ -84,43 +80,46 @@ namespace Agenda.Site
             ComboGenero.Items.Add(new ListItem("Femenino", "Femenino"));
             ComboGenero.Items.Add(new ListItem("Masculino", "Masculino"));
 
-            ComboGenero.Items.Insert(0, new ListItem("-", "-"));
         }
 
-        protected void CargarDropDownPaises()
+        protected void CargarPaisesList()
         {
-            Paises.Items.Add(new ListItem("Argentina", "Argentina"));
-            Paises.Items.Add(new ListItem("Brasil", "Brasil"));
-            Paises.Items.Add(new ListItem("Uruaguay", "Uruguay"));
-            Paises.Items.Add(new ListItem("Paraguay", "Paraguay"));
+            PaisBLL paisBLL = new PaisBLL();
 
-            Paises.Items.Insert(0, new ListItem("Todos", "Todos"));
-        }
+            List<Pais> listaPaises = paisBLL.getPaises();
 
-        protected void CargarContactoInternoList()
-        {
-            ContactoInternoList.Items.Add(new ListItem("Si", "Si"));
-            ContactoInternoList.Items.Add(new ListItem("No", "No"));
-
-            ContactoInternoList.Items.Insert(0, new ListItem("Todos", "Todos"));
+            foreach (Pais pais in listaPaises)
+            {
+                Paises.Items.Add(new ListItem(pais.nombre, Convert.ToString(pais.id)));
+            }
         }
 
         protected void CargarAreaList()
         {
-            AreaList.Items.Add(new ListItem("Marketing", "Marketing"));
-            AreaList.Items.Add(new ListItem("Finanzas", "Finanzas"));
-            AreaList.Items.Add(new ListItem("RRHH", "RRHH"));
-            AreaList.Items.Add(new ListItem("Operaciones", "Operaciones"));
 
-            AreaList.Items.Insert(0, new ListItem("Todos", "Todos"));
+            AreaBLL areaBLL = new AreaBLL();
+
+            List<Area> listaAreas = areaBLL.getAreas();
+
+            foreach (Area area in listaAreas)
+            {
+                AreaList.Items.Add(new ListItem(area.nombre, Convert.ToString(area.id)));
+            }
         }
 
-        protected void CargarActivoList()
+        protected void CargarYesNoLists()
         {
-            ActivoList.Items.Add(new ListItem("Si", "Si"));
-            ActivoList.Items.Add(new ListItem("No", "No"));
 
-            ActivoList.Items.Insert(0, new ListItem("Todos", "Todos"));
+            SiNoBLL sinoBLL = new SiNoBLL();
+
+            List<SiNo> listaSiNo = sinoBLL.getSiNoList();
+
+            foreach (SiNo sino in listaSiNo)
+            {
+                ContactoInternoList.Items.Add(new ListItem(sino.valor, Convert.ToString(sino.id)));
+                ActivoList.Items.Add(new ListItem(sino.valor, Convert.ToString(sino.id)));
+            }
+
         }
     }
 }

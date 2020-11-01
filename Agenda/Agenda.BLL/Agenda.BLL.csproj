@@ -41,11 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MemoryExampleBusiness.cs" />
-    <Compile Include="IExampleBusiness.cs" />
+    <Compile Include="AreaBLL.cs" />
+    <Compile Include="ContactoBLL.cs" />
+    <Compile Include="IContacto.cs" />
+    <Compile Include="PaisBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SiNoBLL.cs" />
+    <Compile Include="UsuarioBLL.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Agenda.DAL\Agenda.DAL.csproj">
+      <Project>{b062289e-0fb3-449f-99ee-7fbac62d0fae}</Project>
+      <Name>Agenda.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Agenda.Entity\Agenda.Entity.csproj">
       <Project>{b86441d1-b44b-4bcf-99a2-9c7ad3f7011c}</Project>
       <Name>Agenda.Entity</Name>

@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Agenda.Entity
 {
-    public class Usuario
+    public class SiNo
     {
         public int id { get; set; }
-        public string User { get; set; }
-        public string Pass { get; set; }
+        public string valor { get; set; }
     }
 }

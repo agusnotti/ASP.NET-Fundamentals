@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agenda.Entity", "Agenda.Entity\Agenda.Entity.csproj", "{B86441D1-B44B-4BCF-99A2-9C7AD3F7011C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agenda.DAL", "Agenda.DAL\Agenda.DAL.csproj", "{B062289E-0FB3-449F-99EE-7FBAC62D0FAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B86441D1-B44B-4BCF-99A2-9C7AD3F7011C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B86441D1-B44B-4BCF-99A2-9C7AD3F7011C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B86441D1-B44B-4BCF-99A2-9C7AD3F7011C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B062289E-0FB3-449F-99EE-7FBAC62D0FAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B062289E-0FB3-449F-99EE-7FBAC62D0FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B062289E-0FB3-449F-99EE-7FBAC62D0FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B062289E-0FB3-449F-99EE-7FBAC62D0FAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

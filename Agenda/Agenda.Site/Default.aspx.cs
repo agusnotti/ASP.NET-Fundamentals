@@ -34,20 +34,19 @@ namespace Agenda.Site
             //instancio entidad usuario
             Usuario usuario = new Usuario { User = IDLogin.UserName, Pass = IDLogin.Password };
 
-            //traigo info de variable de aplicacion
-            List<Usuario> credenciales = (List<Usuario>)Application["Credenciales"];
+            UsuarioBLL usuarioBLL = new UsuarioBLL();
 
-            foreach (Usuario credencial in credenciales)
+            bool isAuthenticate = usuarioBLL.authenticateUser(usuario);
+
+            if (isAuthenticate)
             {
-                if (credencial.User.Equals(usuario.User) && credencial.Pass.Equals(usuario.Pass))
-                {
-                    Response.Cookies["LoginCookieVar"]["User"] = usuario.User;
-                    Response.Cookies["LoginCookieVar"]["Password"] = usuario.Pass;
-                    Response.Cookies["LoginCookieVar"]["UltimoAcceso"] = Convert.ToString(DateTime.Now);
+                Response.Cookies["LoginCookieVar"]["User"] = usuario.User;
+                Response.Cookies["LoginCookieVar"]["Password"] = usuario.Pass;
+                Response.Cookies["LoginCookieVar"]["UltimoAcceso"] = Convert.ToString(DateTime.Now);
 
-                    Response.Redirect("Consulta.aspx");
-                }
+                Response.Redirect("Consulta.aspx");
             }
+
 
 
 

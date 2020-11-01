@@ -85,18 +85,30 @@
                 <asp:Button ID="AgregarContacto" runat="server" Text="Nuevo contacto" OnClick="NuevoContacto_Click"  CssClass="buttonBlue"/>
 
 
-            <asp:GridView ID="GridViewConsulta" runat="server" Text="Texto" AutoGenerateColumns="true" RowStyle-HorizontalAlign="Center"
+            <asp:GridView ID="GridViewConsulta" runat="server" Text="Texto" AutoGenerateColumns="false" RowStyle-HorizontalAlign="Center"  onrowdeleting="ContactGridView_RowDeleting" 
                              HeaderStyle-CssClass="TextoConsulta" CssClass="grilla_contactos" Width="100%" GridLines="Horizontal" OnRowCommand="GridViewConsulta_RowCommand" >
-                    <Columns>                         
-                       <asp:ButtonField  ButtonType="Image" ImageUrl="Images/zoom.png" CommandName="View"/>
+                    <Columns>
+                       <asp:BoundField DataField="id"/>
+                       <asp:boundfield datafield="NombreApellido" headertext="Nombre y Apellido"/>
+                       <asp:boundfield datafield="Genero" headertext="Genero"/>
+                       <asp:boundfield datafield="Pais.nombre" headertext="Pais"/>
+                       <asp:boundfield datafield="Localidad" headertext="Localidad"/>
+                       <asp:boundfield datafield="Contacto_interno.valor" headertext="Contacto interno"/>
+                       <asp:boundfield datafield="Organizacion" headertext="Organizacion"/>
+                       <asp:boundfield datafield="Area.nombre" headertext="Area"/>
+                       <asp:boundfield datafield="Fecha_ingreso" headertext="Fecha de ingreso"/>
+                       <asp:boundfield datafield="Activo.valor" headertext="Activo"/>
+                       <asp:boundfield datafield="Direccion" headertext="Direccion"/>
+                       <asp:boundfield datafield="Telefono_fijo" headertext="Telefono"/>
+                       <asp:boundfield datafield="Telefono_celular" headertext="Celular"/>
+                       <asp:boundfield datafield="Email" headertext="Email"/>
+                       <asp:boundfield datafield="Skype" headertext="Skype"/>
 
+                       <asp:ButtonField  ButtonType="Image" ImageUrl="Images/zoom.png" CommandName="View"/>
                        <asp:ButtonField  ButtonType="Image" ImageUrl="Images/edit.png" CommandName="Edit"/>
 
                        <asp:ButtonField  ButtonType="Image" ImageUrl="Images/delete.png" CommandName="Delete"/>
-
                        <asp:ButtonField  ButtonType="Image" ImageUrl="Images/play_pause.png" CommandName="Activate"/>
-
-
                     </Columns>
 
              </asp:GridView>

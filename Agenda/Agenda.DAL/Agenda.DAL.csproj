@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B86441D1-B44B-4BCF-99A2-9C7AD3F7011C}</ProjectGuid>
+    <ProjectGuid>{B062289E-0FB3-449F-99EE-7FBAC62D0FAE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Agenda.Entity</RootNamespace>
-    <AssemblyName>Agenda.Entity</AssemblyName>
+    <RootNamespace>Agenda.DAL</RootNamespace>
+    <AssemblyName>Agenda.DAL</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,14 +41,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Objects\Area.cs" />
-    <Compile Include="Objects\Contacto.cs" />
-    <Compile Include="Objects\Pais.cs" />
-    <Compile Include="Objects\SiNo.cs" />
-    <Compile Include="Objects\Usuario.cs" />
-    <Compile Include="Objects\FiltroContacto.cs" />
-    <Compile Include="Objects\Paginacion.cs" />
+    <Compile Include="AreaDA.cs" />
+    <Compile Include="ContactoDA.cs" />
+    <Compile Include="DataAccessLayer.cs" />
+    <Compile Include="PaisDA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SiNoDA.cs" />
+    <Compile Include="UserDA.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Agenda.Entity\Agenda.Entity.csproj">
+      <Project>{B86441D1-B44B-4BCF-99A2-9C7AD3F7011C}</Project>
+      <Name>Agenda.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{7cd03ca5-4ce9-483b-9a1c-a5a15f000590}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
