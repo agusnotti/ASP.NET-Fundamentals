@@ -6,7 +6,7 @@
 <link href="Content/Login.css" rel="stylesheet" type="text/css"/>
 
     <div class="container-login">
-        <asp:Login ID="IDLogin" runat="server" OnAuthenticate="Login_Authenticate" CssClass="Login">
+        <asp:Login ID="IDLogin" runat="server" OnAuthenticate="Login_Authenticate" BackColor="#AAAADD" CssClass="Login">
             <LayoutTemplate>
                 <table cellpadding="1" cellspacing="0" style="border-collapse:collapse;">
                     <tr>
@@ -45,7 +45,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="td-boton">
-                                        <asp:Button ID="LoginButton" CssClass="boton-login" runat="server" CommandName="Login" Text="INGRESAR" ValidationGroup="IDLogin" />
+                                        <asp:Button ID="LoginButton" CssClass="boton-login" runat="server" CommandName="Login" Text="INGRESAR" BackColor="#52526B" ForeColor="WhiteSmoke" ValidationGroup="IDLogin" />
                                     </td>
                                 </tr>
                             </table>

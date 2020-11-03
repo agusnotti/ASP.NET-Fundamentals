@@ -28,22 +28,27 @@
         }
 
         .Button {
-    Width: 200px;
-    background-color: Green;
-    Font-Size: Larger;
-    color: white;
-    border-radius: 4px
-}
+        Width: 200px;
+        background-color: Green;
+        Font-Size: Larger;
+        color: white;
+        border-radius: 4px
+    }
 
-.buttonBlue {
-    Width: 200px;
-    background-color: darkblue;
-    Font-Size: Larger;
-    color: white;
-    border-radius: 4px
-}
+        .buttonBlue {
+            Width: 200px;
+            background-color: darkblue;
+            Font-Size: Larger;
+            color: white;
+            border-radius: 4px
+        }
 
+        .paginacion{
+            font-size: 20px;
+            font-weight: bold;
+            color: darkslategrey;
 
+        }
     </style>
 </head>
 <body>
@@ -126,7 +131,9 @@
             <asp:GridView ID="GridViewConsulta" runat="server" Text="Texto" AutoGenerateColumns="false" RowStyle-HorizontalAlign="Center" 
                 DataKeyNames="id" onrowdeleting="ContactGridView_RowDeleting" HeaderStyle-CssClass="TextoConsulta" CssClass="grilla_contactos"
                 Width="100%" GridLines="Horizontal" OnRowCommand="GridViewConsulta_RowCommand"
-                AllowPaging="True" PageSize="5" OnPageIndexChanging="changePagination">
+                AllowPaging="True" PageSize="5" OnPageIndexChanging="changePagination" PagerStyle-CssClas="paginacion">
+                <PagerStyle HorizontalAlign="Center" BackColor="#aaaadd"></PagerStyle>
+                <HeaderStyle BackColor="#aaaadd" HorizontalAlign="Center" Height="30px" ></HeaderStyle>
                     <Columns>
                        <asp:boundfield datafield="NombreApellido" headertext="Nombre y Apellido"/>
                         <asp:boundfield datafield="Cuil" headertext="Cuil"/>

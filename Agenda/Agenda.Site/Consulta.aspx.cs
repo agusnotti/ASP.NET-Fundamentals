@@ -23,8 +23,8 @@ namespace Agenda.Site
                 CargarPaisesList();
                 CargarAreaList();
                 CargarYesNoLists();
-                //CargarFechaDesde();
-                //CargarFechaHasta();
+                CargarFechaDesde();
+                CargarFechaHasta();
                 CargarFiltros();
             }
         }
@@ -155,8 +155,10 @@ namespace Agenda.Site
 
             if (!string.IsNullOrEmpty(FechaHastaBox.Text))
             {
-                //FALTA ACOMODAR LA HORA A 23.59.59
-                filtro.fecha_hasta = Convert.ToDateTime(FechaHastaBox.Text);
+                
+                DateTime fechaHasta = Convert.ToDateTime(FechaHastaBox.Text);
+                TimeSpan horaHasta = new TimeSpan(23, 59, 59);
+                filtro.fecha_hasta = fechaHasta.Date + horaHasta;
             }
 
             //filtro por contacto interno
@@ -304,25 +306,25 @@ namespace Agenda.Site
             GridViewConsulta.DataBind();
 
             
-            //Elimina la hora en el GRID
             foreach (GridViewRow row in GridViewConsulta.Rows)
             {
-                row.Cells[7].Text = row.Cells[7].Text.Split()[0];
+                //Elimina la hora en el GRID
+                row.Cells[8].Text = row.Cells[8].Text.Split()[0];
 
                 //mensaje de confirmacion delete
-                row.Cells[16].Attributes.Add("onclick", "return confirm(\"¿Desea eliminar el contacto?\")");
+                row.Cells[17].Attributes.Add("onclick", "return confirm(\"¿Desea eliminar el contacto?\")");
 
-                ImageButton imageButton = (ImageButton)row.Cells[17].Controls[0];
+                ImageButton imageButton = (ImageButton)row.Cells[18].Controls[0];
                 
-                if (row.Cells[8].Text == "Si")
+                if (row.Cells[9].Text == "Si")
                 {
                     imageButton.ImageUrl = "Images/anular.png";
                     //mensaje de confirmacion inactivacion
-                    row.Cells[17].Attributes.Add("onclick", "return confirm(\"¿Desea inactivar el contacto?\")");
+                    row.Cells[18].Attributes.Add("onclick", "return confirm(\"¿Desea inactivar el contacto?\")");
                 } else
                 {
                     //mensaje de confirmacion de activacion
-                    row.Cells[17].Attributes.Add("onclick", "return confirm(\"¿Desea activar el contacto?\")");
+                    row.Cells[18].Attributes.Add("onclick", "return confirm(\"¿Desea activar el contacto?\")");
                 }
             }
         }

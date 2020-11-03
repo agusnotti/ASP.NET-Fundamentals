@@ -146,23 +146,7 @@ namespace Agenda.Site
             Response.Redirect("Consulta.aspx");
         }
 
-        protected void LimpiarCampos()
-        {
-            NombreApellidoContacto.Text = "";
-            ComboGenero.SelectedValue = "-";
-            Paises.SelectedValue = "0";
-            Localidad.Text = "";
-            ContactoInternoList.SelectedValue = "0";
-            OrganizacionBox.Text = "";
-            AreaList.SelectedValue = "0";
-            ActivoList.SelectedValue = "0";
-            DireccionContacto.Text = "";
-            //TelFijoContacto = 0;
-            //CelContacto = "";
-            MailContacto.Text = "";
-            CuentaSkype.Text = "";
-        }
-
+        
         protected void Salir_Click(object sender, EventArgs e)
         {
             Application["accion"] = null;
