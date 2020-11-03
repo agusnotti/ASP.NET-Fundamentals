@@ -30,6 +30,7 @@ namespace Agenda.BLL
 
             contacto.id = Convert.ToInt32(resultado["contactID"]);
             contacto.NombreApellido = Convert.ToString(resultado["name_lastname"]);
+            contacto.Cuil = Convert.ToString(resultado["cuil"]);
             contacto.Genero = Convert.ToString(resultado["genre"]);
             contacto.Pais = new Pais() { id = Convert.ToInt32(resultado["countryID"])};
             contacto.Localidad = Convert.ToString(resultado["location"]);
@@ -49,33 +50,41 @@ namespace Agenda.BLL
 
         public List<Contacto> GetListContactoByFilter(FiltroContacto filtroContacto)
         {
-            DataSet ds = da.getListContactoByFilter(filtroContacto);
 
             List<Contacto> resultado = new List<Contacto>();
 
-            DataTable tblContactos = ds.Tables[0];
-
-            foreach (DataRow dr in tblContactos.Rows)
+            try
             {
-                Contacto contacto = new Contacto();
-                contacto.id = Convert.ToInt32(dr["contactID"]);
-                contacto.NombreApellido = Convert.ToString(dr["name_lastname"]);
-                contacto.Genero = Convert.ToString(dr["genre"]);
-                contacto.Pais = new Pais() {id = Convert.ToInt32(dr["countryID"]), nombre = Convert.ToString(dr["country_name"])};
-                contacto.Localidad = Convert.ToString(dr["location"]);
-                contacto.Contacto_interno = new SiNo() { id = Convert.ToInt32(dr["internal_contactID"]), valor = Convert.ToString(dr["internal_contact_value"])};
-                contacto.Area = new Area() { id = Convert.ToInt32(dr["areaID"]), nombre = Convert.ToString(dr["area_name"])};
-                contacto.Activo = new SiNo() { id = Convert.ToInt32(dr["activeID"]), valor = Convert.ToString(dr["active_value"])};
-                contacto.Direccion = Convert.ToString(dr["adress"]);
-                contacto.Telefono_fijo = Convert.ToInt64(dr["phone"]);
-                contacto.Telefono_celular = Convert.ToInt64(dr["cell"]);
-                contacto.Email = Convert.ToString(dr["email"]);
-                contacto.Skype = Convert.ToString(dr["skype"]);
-                contacto.Organizacion = Convert.ToString(dr["organization"]);
-                contacto.Fecha_ingreso = Convert.ToDateTime(dr["created_at"]);
+                DataSet ds = da.getListContactoByFilter(filtroContacto);
+                DataTable tblContactos = ds.Tables[0];
+
+                foreach (DataRow dr in tblContactos.Rows)
+                {
+                    Contacto contacto = new Contacto();
+                    contacto.id = Convert.ToInt32(dr["contactID"]);
+                    contacto.NombreApellido = Convert.ToString(dr["name_lastname"]);
+                    contacto.Cuil = Convert.ToString(dr["cuil"]);
+                    contacto.Genero = Convert.ToString(dr["genre"]);
+                    contacto.Pais = new Pais() {id = Convert.ToInt32(dr["countryID"]), nombre = Convert.ToString(dr["country_name"])};
+                    contacto.Localidad = Convert.ToString(dr["location"]);
+                    contacto.Contacto_interno = new SiNo() { id = Convert.ToInt32(dr["internal_contactID"]), valor = Convert.ToString(dr["internal_contact_value"])};
+                    contacto.Area = new Area() { id = Convert.ToInt32(dr["areaID"]) };
+                    contacto.Activo = new SiNo() { id = Convert.ToInt32(dr["activeID"]), valor = Convert.ToString(dr["active_value"])};
+                    contacto.Direccion = Convert.ToString(dr["adress"]);
+                    contacto.Telefono_fijo = Convert.ToInt64(dr["phone"]);
+                    contacto.Telefono_celular = Convert.ToInt64(dr["cell"]);
+                    contacto.Email = Convert.ToString(dr["email"]);
+                    contacto.Skype = Convert.ToString(dr["skype"]);
+                    contacto.Organizacion = Convert.ToString(dr["organization"]);
+                    contacto.Fecha_ingreso = Convert.ToDateTime(dr["created_at"]);
 
 
-                resultado.Add(contacto);
+                    resultado.Add(contacto);
+                }
+            }
+            catch (Exception error)
+            {
+                Utils.Helpers.LogHelper.SaveError(error);
             }
 
             return resultado;
@@ -88,26 +97,47 @@ namespace Agenda.BLL
 
         public void Update(Contacto contacto)
         {
-            da.Update(contacto);
+            try
+            {
+                da.Update(contacto);
+            }
+            catch (Exception error)
+            {
+                Utils.Helpers.LogHelper.SaveError(error);
+            }
         }
 
         public void Delete(int idContacto)
         {
-            da.Delete(idContacto);
+            try
+            {
+                da.Delete(idContacto);
+            }
+            catch (Exception error)
+            {
+                Utils.Helpers.LogHelper.SaveError(error);
+            }
         }
 
         public void Activate(int idContacto)
         {
-            Contacto contacto = GetContactoByID(idContacto);
-            if(contacto.Activo.id == 0)
+            try
             {
-                contacto.Activo.id = 1;
-            } else
-            {
-                contacto.Activo.id = 0;
-            }
+                Contacto contacto = GetContactoByID(idContacto);
+                if(contacto.Activo.id == 0)
+                {
+                    contacto.Activo.id = 1;
+                } else
+                {
+                    contacto.Activo.id = 0;
+                }
 
-            da.Update(contacto);
+                da.Update(contacto);
+            }
+            catch (Exception error)
+            {
+                Utils.Helpers.LogHelper.SaveError(error);
+            } 
         }
     }
 }

@@ -24,43 +24,32 @@ namespace Agenda.Site
 
         protected void Page_Load(object sender, EventArgs e)
         {
-           
-
         }
 
         protected void Login_Authenticate(object sender, AuthenticateEventArgs e)
         {
-
             //instancio entidad usuario
             Usuario usuario = new Usuario { User = IDLogin.UserName, Pass = IDLogin.Password };
 
             UsuarioBLL usuarioBLL = new UsuarioBLL();
 
-            bool isAuthenticate = usuarioBLL.authenticateUser(usuario);
-
-            if (isAuthenticate)
+            try
             {
-                Response.Cookies["LoginCookieVar"]["User"] = usuario.User;
-                Response.Cookies["LoginCookieVar"]["Password"] = usuario.Pass;
-                Response.Cookies["LoginCookieVar"]["UltimoAcceso"] = Convert.ToString(DateTime.Now);
+                bool isAuthenticate = usuarioBLL.authenticateUser(usuario);
 
-                Response.Redirect("Consulta.aspx");
+                if (isAuthenticate)
+                {
+                    Response.Cookies["LoginCookieVar"]["User"] = usuario.User;
+                    Response.Cookies["LoginCookieVar"]["Password"] = usuario.Pass;
+                    Response.Cookies["LoginCookieVar"]["UltimoAcceso"] = Convert.ToString(DateTime.Now);
+
+                    Response.Redirect("Consulta.aspx");
+                }
             }
-
-
-
-
-            //try
-            //{
-            //    throw new Exception("miError");
-            //}
-            //catch(Exception error)
-            //{
-            //    Utils.Helpers.LogHelper.SaveError(error);
-            //}
-
-
-
+            catch (Exception error)
+            {
+                Utils.Helpers.LogHelper.SaveError(error);
+            }
         }
 
         protected void LoginButton_Click(object sender, EventArgs e)

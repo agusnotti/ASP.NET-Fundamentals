@@ -19,17 +19,14 @@
 }
 
 .Button {
-    Width:350px;
-    Height:40px;
+    Width: 200px;
     background-color: Green;
-    Font-Size:Larger;
+    Font-Size: Larger;
     color: white;
     border-radius: 4px
 }
 
 .buttonBlue {
-    Width: 350px;
-    Height: 40px;
     background-color: darkblue;
     Font-Size: Larger;
     color: white;
@@ -57,3 +54,11 @@
 .grilla_contactos{
     margin:10px;
 }
+
+/*.btn-container {
+    display: flex;
+    justify-content: space-between;*/
+    /* margin: 0 60px; */
+    /*width: 88%;
+}*/
+

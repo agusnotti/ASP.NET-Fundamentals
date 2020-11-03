@@ -1,5 +1,7 @@
 ﻿using Agenda.BLL;
 using Agenda.Entity;
+using Agenda.Site.net.azurewebsites.appservicesareas;
+using Agenda.Site.net.azurewebsites.servicioagenda;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -114,16 +116,34 @@ namespace Agenda.Site
                     //le agrego el id a contacto
                     nuevoContacto.id = Convert.ToInt32(AgregarContacto.Attributes["id"]);
                     contactoBLL.Update(nuevoContacto);
+
+                    redireccion();
                 }
                 else
                 {
-                    contactoBLL.Insert(nuevoContacto);
-                }
+                    ServicioContacto servicioContacto = new ServicioContacto();
+                    try
+                    {
+                        string cuil = servicioContacto.ObtenerCuil(nuevoContacto.NombreApellido, nuevoContacto.Genero);
 
-                Application["accion"] = null;
-                Application["contacto"] = null;
-                Response.Redirect("Consulta.aspx");
+                        nuevoContacto.Cuil = cuil;
+
+                        contactoBLL.Insert(nuevoContacto);
+
+                        redireccion();
+                    } catch (Exception ex)
+                    {
+                        // mostrar mensaje de error en front end de no existe contacto
+                    }
+                }
             }
+        }
+
+        private void redireccion()
+        {
+            Application["accion"] = null;
+            Application["contacto"] = null;
+            Response.Redirect("Consulta.aspx");
         }
 
         protected void LimpiarCampos()
@@ -171,14 +191,12 @@ namespace Agenda.Site
 
         protected void CargarAreaList()
         {
-
-            AreaBLL areaBLL = new AreaBLL();
-
-            List<Area> listaAreas = areaBLL.getAreas();
-
-            foreach (Area area in listaAreas)
+            Areas areasService = new Areas();
+            string[] arrayAreas = areasService.getAreas();
+   
+            for (int i = 0; i < arrayAreas.Length; i++)
             {
-                AreaList.Items.Add(new ListItem(area.nombre, Convert.ToString(area.id)));
+                AreaList.Items.Add(new ListItem(arrayAreas[i], Convert.ToString(i)));
             }
         }
 

@@ -15,18 +15,24 @@ namespace Agenda.BLL
         public List<Area> getAreas()
         {
             AreaDA da = new AreaDA();
-            DataSet ds = da.getAreas();
-
             List<Area> resultado = new List<Area>();
 
-            DataTable tblArea = ds.Tables[0];
-
-            foreach (DataRow dr in tblArea.Rows)
+            try
             {
-                Area area = new Area();
-                area.id = Convert.ToInt32(dr["areaID"]);
-                area.nombre = Convert.ToString(dr["name"]);
-                resultado.Add(area);
+                DataSet ds = da.getAreas();
+                DataTable tblArea = ds.Tables[0];
+
+                foreach (DataRow dr in tblArea.Rows)
+                {
+                    Area area = new Area();
+                    area.id = Convert.ToInt32(dr["areaID"]);
+                    area.nombre = Convert.ToString(dr["name"]);
+                    resultado.Add(area);
+                }
+            }
+            catch (Exception error)
+            {
+                Utils.Helpers.LogHelper.SaveError(error);
             }
 
             return resultado;

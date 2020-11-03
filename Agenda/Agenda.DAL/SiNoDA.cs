@@ -30,19 +30,26 @@ namespace Agenda.DAL
                 // Esto es un esquema de la DB
                 DataSet ds = new DataSet();
 
-                // Creo el comando/query de SQL
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = con;
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT * FROM yes_no";
+                try
+                {
+                    // Creo el comando/query de SQL
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "SELECT * FROM yes_no";
 
-                // Agrego esa query al adapter
-                adapter.SelectCommand = cmd;
+                    // Agrego esa query al adapter
+                    adapter.SelectCommand = cmd;
 
-                // Ejecuto la query y agrego los datos al dataset
-                adapter.Fill(ds);
+                    // Ejecuto la query y agrego los datos al dataset
+                    adapter.Fill(ds);
 
-                da.Dispose();
+                    da.Dispose();
+                }
+                catch (Exception error)
+                {
+                    Utils.Helpers.LogHelper.SaveError(error);
+                }
 
                 return ds;
             }

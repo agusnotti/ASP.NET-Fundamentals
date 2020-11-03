@@ -15,23 +15,31 @@ namespace Agenda.BLL
         {
             //instancio el pais Data Access
             PaisDA da = new PaisDA();
-            //obtengo data set de pais
-            DataSet ds = da.getPaises();
 
            //instancio lista donde voy a guardar el resultado del data set
             List<Pais> resultado = new List<Pais>();
-        
-            // extraigo la tabla de paises
-            DataTable tblpaises = ds.Tables[0];
 
-
-            foreach (DataRow dr in tblpaises.Rows)
+            try
             {
-                Pais pais = new Pais();
-                pais.id = Convert.ToInt32(dr["countryID"]);
-                pais.nombre = Convert.ToString(dr["name"]);
-                resultado.Add(pais);
+                //obtengo data set de pais
+                DataSet ds = da.getPaises();
+                // extraigo la tabla de paises
+                DataTable tblpaises = ds.Tables[0];
+
+
+                foreach (DataRow dr in tblpaises.Rows)
+                {
+                    Pais pais = new Pais();
+                    pais.id = Convert.ToInt32(dr["countryID"]);
+                    pais.nombre = Convert.ToString(dr["name"]);
+                    resultado.Add(pais);
+                }
             }
+            catch (Exception error)
+            {
+                Utils.Helpers.LogHelper.SaveError(error);
+            }
+
 
             return resultado;
         }

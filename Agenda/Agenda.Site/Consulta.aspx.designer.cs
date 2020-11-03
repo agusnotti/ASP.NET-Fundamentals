@@ -186,15 +186,6 @@ namespace Agenda.Site
         protected global::System.Web.UI.WebControls.DropDownList ActivoList;
 
         /// <summary>
-        /// Control LimpiarCampos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button LimpiarCampos;
-
-        /// <summary>
         /// Control BotonConsulta.
         /// </summary>
         /// <remarks>

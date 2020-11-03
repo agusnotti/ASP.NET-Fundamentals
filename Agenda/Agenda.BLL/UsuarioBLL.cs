@@ -15,17 +15,24 @@ namespace Agenda.BLL
         public bool authenticateUser(Usuario usuario)
         {
            
-            UserDA da = new UserDA();            
-            DataSet ds = da.getUser(usuario.User);
-
-            DataTable tblUsuario = ds.Tables[0];
-
-            DataRow user = tblUsuario.Rows[0];
-
+            UserDA da = new UserDA();
             bool resultado = false;
 
-            if(usuario.User == Convert.ToString(user["username"]) && usuario.Pass == Convert.ToString(user["password"])){
-                resultado = true;
+            try
+            {
+                DataSet ds = da.getUser(usuario.User);
+                DataTable tblUsuario = ds.Tables[0];
+
+                DataRow user = tblUsuario.Rows[0];
+
+
+                if(usuario.User == Convert.ToString(user["username"]) && usuario.Pass == Convert.ToString(user["password"])){
+                    resultado = true;
+                }
+            }
+            catch (Exception error)
+            {
+                Utils.Helpers.LogHelper.SaveError(error);
             }
 
             return resultado;

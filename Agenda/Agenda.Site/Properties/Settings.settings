@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Agenda.Site.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Agenda_Site_net_azurewebsites_servicioagenda_ServicioContacto" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://servicioagenda.azurewebsites.net/ServicioContacto.asmx</Value>
+    </Setting>
+    <Setting Name="Agenda_Site_net_azurewebsites_appservicesareas_Areas" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://appservicesareas.azurewebsites.net/Areas.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

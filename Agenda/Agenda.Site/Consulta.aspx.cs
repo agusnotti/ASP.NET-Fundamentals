@@ -1,5 +1,6 @@
 ﻿using Agenda.BLL;
 using Agenda.Entity;
+using Agenda.Site.net.azurewebsites.appservicesareas;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,6 +25,22 @@ namespace Agenda.Site
                 CargarYesNoLists();
                 //CargarFechaDesde();
                 //CargarFechaHasta();
+                CargarFiltros();
+            }
+        }
+
+        private void CargarFiltros()
+        {
+            
+            FiltroContacto filtro = (FiltroContacto)Application["filtro"];
+
+            if(filtro != null)
+            {
+                ContactoBLL contactoBLL = new ContactoBLL();
+
+                List<Contacto> gridData = contactoBLL.GetListContactoByFilter(filtro);
+
+                bindGrid(gridData);
             }
         }
 
@@ -60,17 +77,19 @@ namespace Agenda.Site
 
         protected void CargarAreaList()
         {
+            Areas areasService = new Areas();
 
-            AreaBLL areaBLL = new AreaBLL();
+            string[] arrayAreas = areasService.getAreas();
 
-            List<Area> listaAreas = areaBLL.getAreas();
+            //AreaBLL areaBLL = new AreaBLL();
+            //List<Area> listaAreas = areaBLL.getAreas();
 
-            foreach(Area area in listaAreas)
+            for (int i = 0; i < arrayAreas.Length; i++)
             {
-                AreaList.Items.Add(new ListItem(area.nombre, Convert.ToString(area.id)));
+                AreaList.Items.Add(new ListItem(arrayAreas[i], Convert.ToString(i)));
             }
 
-            AreaList.Items.Insert(0, new ListItem("Todos", "0"));
+            AreaList.Items.Insert(0, new ListItem("Todos", "-1"));
         }        
 
 
@@ -153,7 +172,7 @@ namespace Agenda.Site
             }
 
             //filtro por area
-            if (!string.IsNullOrEmpty(AreaList.SelectedValue) && AreaList.SelectedValue != "0")
+            if (!string.IsNullOrEmpty(AreaList.SelectedValue) && AreaList.SelectedValue != "-1")
             {
                 filtro.area = Convert.ToInt32(AreaList.SelectedValue);
             }
@@ -179,7 +198,7 @@ namespace Agenda.Site
             Localidad.Text = "";
             ContactoInternoList.SelectedValue = "-1";
             OrganizacionBox.Text = "";
-            AreaList.SelectedValue = "0";
+            AreaList.SelectedValue = "-1";
             ActivoList.SelectedValue = "-1";
             CargarFechaDesde();
             CargarFechaHasta();
@@ -271,9 +290,20 @@ namespace Agenda.Site
 
         private void bindGrid(List<Contacto> gridData)
         {
+            Areas areasService = new Areas();
+
+            string[] arrayAreas = areasService.getAreas();
+
+            foreach (Contacto contacto in gridData)
+            {
+                contacto.Area.nombre = arrayAreas[contacto.Area.id];
+            }
+
+
             GridViewConsulta.DataSource = gridData;
             GridViewConsulta.DataBind();
 
+            
             //Elimina la hora en el GRID
             foreach (GridViewRow row in GridViewConsulta.Rows)
             {
@@ -299,6 +329,12 @@ namespace Agenda.Site
 
         public void ContactGridView_RowDeleting(Object sender, GridViewDeleteEventArgs e)
         {
+        }
+
+        protected void changePagination(object sender, GridViewPageEventArgs e)
+        {
+            GridViewConsulta.PageIndex = e.NewPageIndex;
+            Consultar(sender, e);
         }
 
     }   

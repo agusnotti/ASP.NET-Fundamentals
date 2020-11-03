@@ -18,7 +18,9 @@ textarea {
     max-width: 280px;
 }
 
-
+#LimpiarCampos{
+    background-image: url('Images/clearFilter.png');
+}
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .jumbotron {

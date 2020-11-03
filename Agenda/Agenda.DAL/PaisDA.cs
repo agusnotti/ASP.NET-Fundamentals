@@ -27,21 +27,28 @@ namespace Agenda.DAL
             {
                 // Esto es un esquema de la DB
                 DataSet ds = new DataSet();
-                
-                // Creo el comando/query de SQL
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = con;
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT * FROM country";
 
-                // Agrego esa query al adapter
-                adapter.SelectCommand = cmd;
+                try
+                {                
+                    // Creo el comando/query de SQL
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "SELECT * FROM country";
 
-                // Ejecuto la query y agrego los datos al dataset
-                adapter.Fill(ds);
+                    // Agrego esa query al adapter
+                    adapter.SelectCommand = cmd;
 
-                da.Dispose();
-                
+                    // Ejecuto la query y agrego los datos al dataset
+                    adapter.Fill(ds);
+
+                    da.Dispose();
+                }
+                catch (Exception error)
+                {
+                    Utils.Helpers.LogHelper.SaveError(error);
+                }
+
                 return ds;
             }
         }

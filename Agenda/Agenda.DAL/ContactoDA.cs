@@ -43,12 +43,14 @@ namespace Agenda.DAL
 
         public DataSet getListContactoByFilter(FiltroContacto filtroContacto)
         {
-            try
+            
+            using (SqlDataAdapter adapter = new SqlDataAdapter())
             {
-                using (SqlDataAdapter adapter = new SqlDataAdapter())
+                DataSet ds = new DataSet();
+                SqlCommand cmd = new SqlCommand();
+
+                try
                 {
-                    DataSet ds = new DataSet();
-                    SqlCommand cmd = new SqlCommand();
                     cmd.Connection = con;
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandText = "Contactos_GetByFilter";
@@ -79,13 +81,13 @@ namespace Agenda.DAL
                     {
                         filtroContacto.paginacion.RecordsCount = Convert.ToInt32(ds.Tables[0].Rows[0]["total_records"]);
                     }
-
-                    return ds;
                 }
-            }
-            catch(Exception e)
-            {
-                return null;
+                catch (Exception error)
+                {
+                    Utils.Helpers.LogHelper.SaveError(error);
+                }
+
+                return ds;
             }
             
         }
@@ -94,28 +96,37 @@ namespace Agenda.DAL
         {
             using (SqlDataAdapter adapter = new SqlDataAdapter())
             {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = con;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "Contacto_Insert";
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@name_lastname", Value = contacto.NombreApellido, SqlDbType = SqlDbType.VarChar });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@genre", Value = contacto.Genero, SqlDbType = SqlDbType.VarChar });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@country", Value = contacto.Pais.id, SqlDbType = SqlDbType.Int });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@location", Value = contacto.Localidad, SqlDbType = SqlDbType.VarChar });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@internal_contact", Value = contacto.Contacto_interno.id, SqlDbType = SqlDbType.Bit });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@area", Value = contacto.Area.id, SqlDbType = SqlDbType.Int });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@active", Value = contacto.Activo.id, SqlDbType = SqlDbType.Bit });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@adress", Value = contacto.Direccion, SqlDbType = SqlDbType.VarChar });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@phone", Value = contacto.Telefono_fijo, SqlDbType = SqlDbType.BigInt });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@cell", Value = contacto.Telefono_celular, SqlDbType = SqlDbType.BigInt });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@email", Value = contacto.Email, SqlDbType = SqlDbType.VarChar });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@skype", Value = contacto.Skype, SqlDbType = SqlDbType.VarChar });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@organization", Value = contacto.Organizacion, SqlDbType = SqlDbType.VarChar });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@created_at", Value = contacto.Fecha_ingreso, SqlDbType = SqlDbType.DateTime });
+                int i = 0;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "Contacto_Insert";
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@name_lastname", Value = contacto.NombreApellido, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@cuil", Value = contacto.Cuil, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@genre", Value = contacto.Genero, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@country", Value = contacto.Pais.id, SqlDbType = SqlDbType.Int });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@location", Value = contacto.Localidad, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@internal_contact", Value = contacto.Contacto_interno.id, SqlDbType = SqlDbType.Bit });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@area", Value = contacto.Area.id, SqlDbType = SqlDbType.Int });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@active", Value = contacto.Activo.id, SqlDbType = SqlDbType.Bit });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@adress", Value = contacto.Direccion, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@phone", Value = contacto.Telefono_fijo, SqlDbType = SqlDbType.BigInt });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@cell", Value = contacto.Telefono_celular, SqlDbType = SqlDbType.BigInt });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@email", Value = contacto.Email, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@skype", Value = contacto.Skype, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@organization", Value = contacto.Organizacion, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@created_at", Value = contacto.Fecha_ingreso, SqlDbType = SqlDbType.DateTime });
 
-                adapter.InsertCommand = cmd;
+                    adapter.InsertCommand = cmd;
 
-                int i = adapter.InsertCommand.ExecuteNonQuery();
+                    i = adapter.InsertCommand.ExecuteNonQuery();
+                }
+                catch(Exception error)
+                {
+                    Utils.Helpers.LogHelper.SaveError(error);
+                }
 
                 return i > 0;
             }
@@ -123,32 +134,39 @@ namespace Agenda.DAL
 
         public bool Update(Contacto contacto)        
         {
-
             using (SqlDataAdapter adapter = new SqlDataAdapter())
             {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = con;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "Contacto_update";
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@contactoID", Value = contacto.id, SqlDbType = SqlDbType.Int });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@name_lastname", Value = contacto.NombreApellido, SqlDbType = SqlDbType.VarChar });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@genre", Value = contacto.Genero, SqlDbType = SqlDbType.VarChar });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@country", Value = contacto.Pais.id, SqlDbType = SqlDbType.Int });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@location", Value = contacto.Localidad, SqlDbType = SqlDbType.VarChar });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@internal_contact", Value = contacto.Contacto_interno.id, SqlDbType = SqlDbType.Bit });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@area", Value = contacto.Area.id, SqlDbType = SqlDbType.Int });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@active", Value = contacto.Activo.id, SqlDbType = SqlDbType.Bit });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@adress", Value = contacto.Direccion, SqlDbType = SqlDbType.VarChar });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@phone", Value = contacto.Telefono_fijo, SqlDbType = SqlDbType.BigInt });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@cell", Value = contacto.Telefono_celular, SqlDbType = SqlDbType.BigInt });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@email", Value = contacto.Email, SqlDbType = SqlDbType.VarChar });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@skype", Value = contacto.Skype, SqlDbType = SqlDbType.VarChar });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@organization", Value = contacto.Organizacion, SqlDbType = SqlDbType.VarChar });
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@created_at", Value = contacto.Fecha_ingreso, SqlDbType = SqlDbType.DateTime });
+                int i = 0;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "Contacto_update";
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@contactoID", Value = contacto.id, SqlDbType = SqlDbType.Int });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@name_lastname", Value = contacto.NombreApellido, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@genre", Value = contacto.Genero, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@country", Value = contacto.Pais.id, SqlDbType = SqlDbType.Int });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@location", Value = contacto.Localidad, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@internal_contact", Value = contacto.Contacto_interno.id, SqlDbType = SqlDbType.Bit });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@area", Value = contacto.Area.id, SqlDbType = SqlDbType.Int });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@active", Value = contacto.Activo.id, SqlDbType = SqlDbType.Bit });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@adress", Value = contacto.Direccion, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@phone", Value = contacto.Telefono_fijo, SqlDbType = SqlDbType.BigInt });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@cell", Value = contacto.Telefono_celular, SqlDbType = SqlDbType.BigInt });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@email", Value = contacto.Email, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@skype", Value = contacto.Skype, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@organization", Value = contacto.Organizacion, SqlDbType = SqlDbType.VarChar });
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@created_at", Value = contacto.Fecha_ingreso, SqlDbType = SqlDbType.DateTime });
 
-                adapter.UpdateCommand = cmd;
+                    adapter.UpdateCommand = cmd;
 
-                int i = adapter.UpdateCommand.ExecuteNonQuery();
+                    i = adapter.UpdateCommand.ExecuteNonQuery();
+                }
+                catch (Exception error)
+                {
+                    Utils.Helpers.LogHelper.SaveError(error);
+                }
 
                 return i > 0;
             }
@@ -159,15 +177,24 @@ namespace Agenda.DAL
 
             using (SqlDataAdapter adapter = new SqlDataAdapter())
             {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = con;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "Contacto_Delete";
-                cmd.Parameters.Add(new SqlParameter() { ParameterName = "@contactID", Value = idContacto, SqlDbType = SqlDbType.Int });
+                int i = 0;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "Contacto_Delete";
+                    cmd.Parameters.Add(new SqlParameter() { ParameterName = "@contactID", Value = idContacto, SqlDbType = SqlDbType.Int });
 
-                adapter.DeleteCommand = cmd;
+                    adapter.DeleteCommand = cmd;
 
-                int i = adapter.DeleteCommand.ExecuteNonQuery();
+                    i = adapter.DeleteCommand.ExecuteNonQuery();
+
+                }
+                catch (Exception error)
+                {
+                    Utils.Helpers.LogHelper.SaveError(error);
+                }
 
                 return i > 0;
             }

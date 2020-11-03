@@ -19,6 +19,7 @@ namespace Agenda.DAL
             con = da.obtenerConexion();
         }
 
+
         public DataSet getAreas()
         {
             using (SqlDataAdapter adapter = new SqlDataAdapter())
@@ -26,15 +27,22 @@ namespace Agenda.DAL
                 DataSet ds = new DataSet();
                 SqlCommand cmd = new SqlCommand();
 
-                cmd.Connection = con;
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT * FROM AREA";
+                try
+                {
+                    cmd.Connection = con;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "SELECT * FROM AREA";
 
-                adapter.SelectCommand = cmd;
+                    adapter.SelectCommand = cmd;
 
-                adapter.Fill(ds);
+                    adapter.Fill(ds);
 
-                da.Dispose();
+                    da.Dispose();
+                }
+                catch (Exception error)
+                {
+                    Utils.Helpers.LogHelper.SaveError(error);
+                }
 
                 return ds;
             }

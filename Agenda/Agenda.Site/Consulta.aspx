@@ -11,8 +11,39 @@
     <title></title>
     <style type="text/css">
         .auto-style1 {
-            width: 30%;
+            width: 39%;
         }
+
+        .accionsFiltroButtons{
+            text-align:right;
+            display: inline-block;
+            width: 39%;
+        }
+
+
+        .clearFiltroButton {
+            text-align: left;
+             display: inline-block;
+             width: 35%;
+        }
+
+        .Button {
+    Width: 200px;
+    background-color: Green;
+    Font-Size: Larger;
+    color: white;
+    border-radius: 4px
+}
+
+.buttonBlue {
+    Width: 200px;
+    background-color: darkblue;
+    Font-Size: Larger;
+    color: white;
+    border-radius: 4px
+}
+
+
     </style>
 </head>
 <body>
@@ -77,18 +108,28 @@
                         <asp:DropDownList ID="ActivoList" runat="server"></asp:DropDownList>
                     </td>
                 </tr>
-            </table>
-        
+            </table>          
 
-                <asp:Button ID="LimpiarCampos" runat="server" Text="Limpiar Campos" OnClick="LimpiarCampos_Click"  CssClass="button"/>
-                <asp:Button ID="BotonConsulta" runat="server" Text="Consultar" OnClick="Consultar"  CssClass="button"/>
-                <asp:Button ID="AgregarContacto" runat="server" Text="Nuevo contacto" OnClick="NuevoContacto_Click"  CssClass="buttonBlue"/>
-
-
-            <asp:GridView ID="GridViewConsulta" runat="server" Text="Texto" AutoGenerateColumns="false" RowStyle-HorizontalAlign="Center" DataKeyNames="id" onrowdeleting="ContactGridView_RowDeleting" 
-                             HeaderStyle-CssClass="TextoConsulta" CssClass="grilla_contactos" Width="100%" GridLines="Horizontal" OnRowCommand="GridViewConsulta_RowCommand" >
+            <div class="container">
+                <div class="clearFiltroButton">
+                    <asp:ImageButton ImageUrl="Images/clearFilter.png" runat="server"  OnClick="LimpiarCampos_Click" Height="32px" Width="37px"/>
+                </div>
+                <div class="accionsFiltroButtons">
+                        <asp:Button ID="BotonConsulta" runat="server" Text="Consultar" OnClick="Consultar"  CssClass="button"/>
+                        <asp:Button ID="AgregarContacto" runat="server" Text="Nuevo contacto" OnClick="NuevoContacto_Click"  CssClass="buttonBlue"/>
+                </div>
+            </div>
+            
+                    
+            
+              
+            <asp:GridView ID="GridViewConsulta" runat="server" Text="Texto" AutoGenerateColumns="false" RowStyle-HorizontalAlign="Center" 
+                DataKeyNames="id" onrowdeleting="ContactGridView_RowDeleting" HeaderStyle-CssClass="TextoConsulta" CssClass="grilla_contactos"
+                Width="100%" GridLines="Horizontal" OnRowCommand="GridViewConsulta_RowCommand"
+                AllowPaging="True" PageSize="5" OnPageIndexChanging="changePagination">
                     <Columns>
                        <asp:boundfield datafield="NombreApellido" headertext="Nombre y Apellido"/>
+                        <asp:boundfield datafield="Cuil" headertext="Cuil"/>
                        <asp:boundfield datafield="Genero" headertext="Genero"/>
                        <asp:boundfield datafield="Pais.nombre" headertext="Pais"/>
                        <asp:boundfield datafield="Localidad" headertext="Localidad"/>
@@ -103,11 +144,10 @@
                        <asp:boundfield datafield="Email" headertext="Email"/>
                        <asp:boundfield datafield="Skype" headertext="Skype"/>
 
-                       <asp:ButtonField ButtonType="Image" ImageUrl="Images/zoom.png" CommandName="View"/>
+                       <asp:ButtonField  ButtonType="Image" ImageUrl="Images/zoom.png" CommandName="View"/>
                        <asp:ButtonField  ButtonType="Image" ImageUrl="Images/edit.png" CommandName="Edit"/>
                        <asp:ButtonField  ButtonType="Image" ImageUrl="Images/delete.png" CommandName="Delete"/>
-                       <asp:ButtonField  ButtonType="Image" ImageUrl="Images/play_pause.png" CommandName="Activate"/>
-                    </Columns>
+                       <asp:ButtonField  ButtonType="Image" ImageUrl="Images/play_pause.png" CommandName="Activate"/>                    </Columns>
 
              </asp:GridView>
         </form>

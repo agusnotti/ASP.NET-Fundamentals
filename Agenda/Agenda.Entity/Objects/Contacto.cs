@@ -10,6 +10,7 @@ namespace Agenda.Entity
     {
         public int id { get; set; }
         public string NombreApellido { get; set; }
+        public string Cuil { get; set; }
         public string Genero { get; set; }
         public Pais Pais { get; set; }
         public string Localidad { get; set; }
